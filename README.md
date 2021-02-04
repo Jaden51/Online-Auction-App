@@ -1,6 +1,6 @@
 # Online Auction System (name later)
 
-##Overview
+## Overview
 In today's age, people can buy, sell, pay for everything online. Why not be
 able to auction items online. With *app name here*, people will be able to post
 items they wish to auction off. When a user posts an item, they will have the option for
