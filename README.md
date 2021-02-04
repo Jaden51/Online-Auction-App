@@ -25,3 +25,15 @@ have the time to go to an auction house.
 My grandfather was an auctioneer and going to his events were really entertaining,
 and I am a huge fan of Storage Wars. In our now digital age, I felt like making
 an application which makes auctions easy and accessible to everyone online.
+
+## User Stories
+In the context of a seller
+- As a user, I want to be able to put an item up for auction
+- As a user, I want to be able to add the time the auction is up
+- As a user, I want to be able to add the minimum bid increments to an item
+- As a user, I want to be able to add a buyout to an item
+- As a user, I want to be able to check the status of my items up for sale
+
+In the context of a buyer
+- As a user, I want to be able to place a bid on an item
+- As a user, I want to be able to see the list of items to bid on
