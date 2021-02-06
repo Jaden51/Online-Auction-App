@@ -10,7 +10,7 @@ Other users may place bids and look up items currently up for auction.
 ## Features
 - Users can **post** items to the online auction
 - Users can **place** bids and **buy** items
-- User **authentication**
+- User **authentication** (maybe)
 - Users can **search** up items they are looking for
 - Users can see the current **status** of the auction
     - Current bid
