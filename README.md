@@ -31,7 +31,7 @@ In the context of a seller
 - As a user, I want to be able to put an item up for auction
 - As a user, I want to be able to add the time the auction is up
 - As a user, I want to be able to add the minimum bid increments to an item
-- As a user, I want to be able t****o add a buyout to an item
+- As a user, I want to be able to add a buyout price to an item
 - As a user, I want to be able to check the status of my items up for sale
 
 In the context of a buyer
