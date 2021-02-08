@@ -54,9 +54,15 @@ public class Item {
     // MODIFIES: this
     // EFFECTS: changes the sold status of the item from
     //          false to true and removes the item from the sellers
-    //          and buyers item lists
+    //          and stores item list
     public void sellItem() {
-        this.sold = true;
+        // stub
+    }
+
+    // MODIFIES: this
+    // EFFECTS: returns the important status fields of the current item
+    public void getStatus() {
+        // stub
     }
 
 }
