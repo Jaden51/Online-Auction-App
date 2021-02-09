@@ -11,18 +11,18 @@ public class UserItemList implements ItemList {
     }
 
     @Override
-    public void removeItem() {
-
+    public void removeItem(Item item) {
+        itemList.remove(item);
     }
 
     @Override
-    public void addItem() {
-
+    public void addItem(Item item) {
+        itemList.add(item);
     }
 
     @Override
     public Item getItem(int index) {
-        return null;
+        return itemList.get(index);
     }
 
     @Override

@@ -11,12 +11,12 @@ public class StoreItemList implements ItemList {
     }
 
     @Override
-    public void removeItem() {
+    public void removeItem(Item item) {
 
     }
 
     @Override
-    public void addItem() {
+    public void addItem(Item item) {
 
     }
 

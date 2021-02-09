@@ -6,7 +6,7 @@ import model.UserItemList;
 import java.util.Scanner;
 
 public class AuctionApp {
-    private UserItemList userItemList;
+    protected UserItemList userItemList;
     private StoreItemList storeItemList;
     private Scanner keyboard;
 
