@@ -1,29 +1,55 @@
 package model;
 
-import ui.AuctionApp;
-
 public class Item {
+    private static final int NO_BID_PRICE = -1;
+
     private String itemName;
     private double startingPrice;
     private double minBid;
-    private double buyOut;
+    private double buyout;
     private double currentBid;
-
-    private int id;
     private boolean sold;
 
-    // REQUIRES: itemName of non 0 length
+    // REQUIRES: itemName of non 0 length, starting price > 0, minBid > 0, buyout > 0
     // EFFECTS: sets the name of the item; the price of the item;
     //          the minimum bid increase to place on the item;
     //          and the buy out of the item
-    public Item(String itemName, double startingPrice, double minBid, double buyOut) {
+    public Item(String itemName, double startingPrice, double minBid, double buyout) {
         this.itemName = itemName;
         this.startingPrice = startingPrice;
-        this.currentBid = startingPrice;
+        this.currentBid = NO_BID_PRICE;
         this.minBid = minBid;
-        this.buyOut = buyOut;
+        this.buyout = buyout;
 
         this.sold = false;
+    }
+
+    // REQUIRES: amount >= minBid
+    // MODIFIES: this
+    // EFFECTS: increases the current bid of the item.
+    //          if the amount is greater than the buyout than the item is sold
+    //          if the bid increases (bid amount >= minBid), increase the bid and return true
+    //          otherwise return false
+    public boolean increaseBid(double amount) {
+        if (amount >= minBid) {
+            if (this.currentBid == NO_BID_PRICE) {
+                this.currentBid = startingPrice;
+            }
+            this.currentBid += amount;
+            if (!(this.currentBid < buyout)) {
+                this.sold = true;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public String getItemName() {
+        return this.itemName;
+    }
+
+    public double getStartingPrice() {
+        return this.startingPrice;
     }
 
     public double getCurrentBid() {
@@ -34,35 +60,12 @@ public class Item {
         return this.minBid;
     }
 
-    public double getBuyOut() {
-        return this.buyOut;
+    public double getBuyout() {
+        return this.buyout;
     }
 
-    public double getItemId() {
-        return this.id;
-    }
-
-    // REQUIRES: amount >= minBid
-    // MODIFIES: this
-    // EFFECTS: increases the current bid of the item.
-    //          if the amount is greater than the buyout
-    //          than the item is sold
-    public void increaseBid(double amount) {
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: changes the sold status of the item from
-    //          false to true and removes the item from the sellers
-    //          and stores item list
-    public void sellItem() {
-        // stub
-    }
-
-    // MODIFIES: this
-    // EFFECTS: returns the important status fields of the current item
-    public void getStatus() {
-        // stub
+    public boolean isSold() {
+        return this.sold;
     }
 
 }
