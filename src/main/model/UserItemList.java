@@ -25,4 +25,9 @@ public class UserItemList implements ItemList {
         return null;
     }
 
+    @Override
+    public int listSize() {
+        return itemList.size();
+    }
+
 }

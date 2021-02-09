@@ -14,4 +14,6 @@ public interface ItemList {
     // EFFECTS: looks in the array to find the item the user wants
     //          to check status of
     Item getItem(int index);
+
+    int listSize();
 }

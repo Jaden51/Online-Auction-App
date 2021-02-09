@@ -24,4 +24,9 @@ public class StoreItemList implements ItemList {
     public Item getItem(int index) {
         return null;
     }
+
+    @Override
+    public int listSize() {
+        return 0;
+    }
 }

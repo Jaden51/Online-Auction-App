@@ -10,10 +10,13 @@ public class AuctionApp {
     private StoreItemList storeItemList;
     private Scanner keyboard;
 
+    // EFFECTS: runs the auction store
     public AuctionApp() {
         runActionApp();
     }
 
+    // MODIFIES: this
+    // process user inputs
     private void runActionApp() {
         boolean run = true;
         String input;
@@ -34,12 +37,15 @@ public class AuctionApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes fields
     private void initialize() {
         userItemList = new UserItemList();
         storeItemList = new StoreItemList();
         keyboard = new Scanner(System.in);
     }
 
+    // EFFECTS: displays the stores menu
     private void menu() {
         System.out.println("\nSelect: ");
         System.out.println("p -> Place item on auction store");
@@ -48,16 +54,18 @@ public class AuctionApp {
         System.out.println("q -> Quit");
     }
 
+    // MODIFIES: this
+    // EFFECTS: read the user input to bring up new menus if needed
     private void processInput(String input) {
         switch (input) {
             case "p":
-                System.out.println("Bringing up place item menu");
+                new UploadItem();
                 break;
             case "s":
-                System.out.println("Bringing store");
+                new Store();
                 break;
             case "v":
-                System.out.println("Bringing up your items");
+                new UserStore();
                 break;
             default:
                 System.out.println("Invalid input");
