@@ -1,13 +1,14 @@
 package ui;
 
-import model.StoreItemList;
+import model.AuctionItemList;
+import model.ItemList;
 import model.UserItemList;
 
 import java.util.Scanner;
 
 public class AuctionApp {
     protected UserItemList userItemList;
-    private StoreItemList storeItemList;
+    private AuctionItemList storeItemList;
     private Scanner keyboard;
 
     // EFFECTS: runs the auction store
@@ -39,7 +40,7 @@ public class AuctionApp {
     // EFFECTS: initializes fields
     private void initialize() {
         userItemList = new UserItemList();
-        storeItemList = new StoreItemList();
+        storeItemList = new AuctionItemList();
         keyboard = new Scanner(System.in);
     }
 
@@ -57,13 +58,13 @@ public class AuctionApp {
     private void processInput(String input) {
         switch (input) {
             case "p":
-                new UploadItem(userItemList);
-                break;
-            case "s":
-                new Store();
+                new UploadItem(userItemList, storeItemList);
                 break;
             case "v":
-                new UserStore(userItemList);
+                new Store(userItemList);
+                break;
+            case "s":
+                new Store(storeItemList);
                 break;
             default:
                 System.out.println("Invalid input");

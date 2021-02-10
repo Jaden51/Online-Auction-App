@@ -1,6 +1,8 @@
 package ui;
 
 import model.Item;
+import model.AuctionItemList;
+import model.ItemList;
 import model.UserItemList;
 
 import java.util.Scanner;
@@ -14,14 +16,15 @@ public class UploadItem {
     private double buyout;
 
     // EFFECTS: runs the upload item menu
-    public UploadItem(UserItemList itemList) {
+    public UploadItem(ItemList userItemList, ItemList storeItemList) {
         this.itemName = inputItemName();
         this.startingPrice = inputStartingPrice();
         this.minBid = inputMinBid();
         this.buyout = inputBuyout();
 
         this.item = new Item(this.itemName, this.startingPrice, this.minBid, this.buyout);
-        itemList.addItem(this.item);
+        userItemList.addItem(this.item);
+        storeItemList.addItem(this.item);
     }
 
     // MODIFIES: this
