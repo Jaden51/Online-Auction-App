@@ -21,8 +21,6 @@ public class AuctionApp {
         boolean run = true;
         String input;
 
-        System.out.println("Welcome to Auction App!");
-
         initialize();
 
         while (run) {
@@ -59,13 +57,13 @@ public class AuctionApp {
     private void processInput(String input) {
         switch (input) {
             case "p":
-                new UploadItem();
+                new UploadItem(userItemList);
                 break;
             case "s":
                 new Store();
                 break;
             case "v":
-                new UserStore();
+                new UserStore(userItemList);
                 break;
             default:
                 System.out.println("Invalid input");

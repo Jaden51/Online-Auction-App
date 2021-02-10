@@ -1,19 +1,43 @@
 package model;
 
-public interface ItemList {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class ItemList {
+    private List<Item> itemList;
+
+    public ItemList() {
+        itemList = new ArrayList<>();
+    }
+
     // MODIFIES: this
     // EFFECTS: removes an item from the item list if the status is
     //          set to sold
-    void removeItem(Item item);
+    public void removeItem(Item item) {
+        itemList.remove(item);
+    }
 
     // MODIFIES: this
     // EFFECTS: adds an item from the item list
-    void addItem(Item item);
+    public void addItem(Item item) {
+        itemList.add(item);
+    }
 
     // MODIFIES: this
     // EFFECTS: looks in the array to find the item the user wants
     //          to check status of
-    Item getItem(int index);
+    public Item getItem(int index) {
+        return itemList.get(index);
+    }
 
-    int listSize();
+    // MODIFIES: this
+    // EFFECTS: gets the current size of the users store
+    public int listSize() {
+        return itemList.size();
+    }
+
+    // EFFECTS: get the list from the users store
+    public List<Item> getList() {
+        return itemList;
+    }
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserItemListTest {
-    private UserItemList itemList;
+    private ItemList itemList;
     private Item item1;
     private Item item2;
     private Item item3;

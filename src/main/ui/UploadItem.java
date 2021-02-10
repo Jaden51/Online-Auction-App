@@ -5,7 +5,7 @@ import model.UserItemList;
 
 import java.util.Scanner;
 
-public class UploadItem extends AuctionApp {
+public class UploadItem {
     private Item item;
     private Scanner keyboard = new Scanner(System.in);
     private String itemName;
@@ -14,14 +14,14 @@ public class UploadItem extends AuctionApp {
     private double buyout;
 
     // EFFECTS: runs the upload item menu
-    public UploadItem() {
+    public UploadItem(UserItemList itemList) {
         this.itemName = inputItemName();
         this.startingPrice = inputStartingPrice();
         this.minBid = inputMinBid();
         this.buyout = inputBuyout();
 
         this.item = new Item(this.itemName, this.startingPrice, this.minBid, this.buyout);
-        addItemToUserList(this.item);
+        itemList.addItem(this.item);
     }
 
     // MODIFIES: this
@@ -50,12 +50,6 @@ public class UploadItem extends AuctionApp {
     private double inputBuyout() {
         System.out.println("Enter the items buyout");
         return keyboard.nextDouble();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: adds the item to the current users item list
-    public void addItemToUserList(Item item) {
-        userItemList.addItem(item);
     }
 
 }
