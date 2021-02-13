@@ -1,6 +1,7 @@
 package ui;
 
 import model.AuctionItemList;
+import model.Item;
 import model.ItemList;
 import model.UserItemList;
 
@@ -17,7 +18,8 @@ public class AuctionApp {
     }
 
     // MODIFIES: this
-    // process user inputs
+    // EFFECTS: process user inputs
+    // Code inspiration from Teller-App
     private void runActionApp() {
         boolean run = true;
         String input;
@@ -39,9 +41,11 @@ public class AuctionApp {
     // MODIFIES: this
     // EFFECTS: initializes fields
     private void initialize() {
+        keyboard = new Scanner(System.in);
         userItemList = new UserItemList();
         storeItemList = new AuctionItemList();
-        keyboard = new Scanner(System.in);
+
+        addItemsAlreadyInStore();
     }
 
     // EFFECTS: displays the stores menu
@@ -70,6 +74,19 @@ public class AuctionApp {
                 System.out.println("Invalid input");
                 break;
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds items to the auction store to begin to app so the user
+    //          can bid on pre-existing items
+    private void addItemsAlreadyInStore() {
+        Item item1 = new Item("Mike Trout Rookie Card", 1000, 100, 100000);
+        Item item2 = new Item("Worn out nike pants", 10, 1, 100);
+        Item item3 = new Item("Chicago Cubs hat", 20, 3, 200);
+
+        storeItemList.addItem(item1);
+        storeItemList.addItem(item2);
+        storeItemList.addItem(item3);
     }
 
 }
