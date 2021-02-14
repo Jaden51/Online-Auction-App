@@ -86,6 +86,10 @@ public class AuctionApp {
         Item item2 = new Item("Worn out nike pants", 10, 1, 100);
         Item item3 = new Item("Chicago Cubs hat", 20, 3, 200);
 
+        item1.setFirstBid();
+        item1.increaseBid(1000);
+        item3.setFirstBid();
+
         storeItemList.addItem(item1);
         storeItemList.addItem(item2);
         storeItemList.addItem(item3);

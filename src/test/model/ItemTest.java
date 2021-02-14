@@ -17,6 +17,8 @@ public class ItemTest {
 
     @Test
     void testIncreaseBidNotBuyout() {
+        item1.setFirstBid();
+        assertEquals(item1.getStartingPrice(), item1.getCurrentBid());
         item1.increaseBid(10);
         assertEquals(110, item1.getCurrentBid());
         assertFalse(item1.isSold());
@@ -24,9 +26,10 @@ public class ItemTest {
 
     @Test
     void testIncreaseBidNotAboveMinBid() {
+        assertEquals(Item.NO_BID_PRICE, item1.getCurrentBid());
+        item1.setFirstBid();
         assertFalse(item1.increaseBid(5));
-        assertEquals(-1, item1.getCurrentBid());
-
+        assertEquals(item1.getStartingPrice(), item1.getCurrentBid());
         assertTrue(item1.increaseBid(20));
         assertEquals(120, item1.getCurrentBid());
     }
@@ -47,9 +50,10 @@ public class ItemTest {
     }
 
     @Test
-    void testIncreaseBidToVerifyStartingPrice() {
-        item2.increaseBid(0);
-        assertEquals(item2.getStartingPrice(), item2.getCurrentBid());
+    void testFirstBid() {
+        assertEquals(Item.NO_BID_PRICE, item1.getCurrentBid());
+        item1.setFirstBid();
+        assertEquals(item1.getStartingPrice(), item1.getCurrentBid());
     }
 
 }

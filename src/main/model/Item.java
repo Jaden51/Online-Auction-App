@@ -36,9 +36,6 @@ public class Item {
     //          otherwise return false
     public boolean increaseBid(double amount) {
         if (amount >= minBid) {
-            if (this.currentBid == NO_BID_PRICE) {
-                this.currentBid = startingPrice;
-            }
             this.currentBid += amount;
             if (this.currentBid >= buyout) {
                 this.sold = true;

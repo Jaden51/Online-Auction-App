@@ -67,7 +67,7 @@ public class AuctionStore extends Store {
 
     private void placeBid() {
         double input;
-        System.out.println("Place bid: (any other key to quit)");
+        System.out.println("Place bid: ");
         while (!keyboard.hasNextDouble()) {
             System.out.println("Enter a number value please!");
             keyboard.nextLine();
