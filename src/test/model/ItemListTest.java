@@ -5,19 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ItemListTest {
-    private ItemList itemList;
-    private Item item1;
-    private Item item2;
-    private Item item3;
+public abstract class ItemListTest {
+    ItemList itemList;
+    Item item1;
+    Item item2;
+    Item item3;
 
-    @BeforeEach
-    void setup() {
-        itemList = new UserItemList();
-        item1 = new Item("hat", 100, 10, 1000);
-        item2 = new Item("pants", 200, 1, 500);
-        item3 = new Item("shoes", 50, 5, 200);
-    }
+    abstract void setup();
 
     @Test
     void testAddItemEmptyList() {
@@ -27,9 +21,7 @@ public class ItemListTest {
 
     @Test
     void testAddItemMultiple() {
-        itemList.addItem(item1);
-        itemList.addItem(item2);
-        itemList.addItem(item3);
+        addItemsToTestList();
         assertEquals(3, itemList.listSize());
     }
 
@@ -42,9 +34,7 @@ public class ItemListTest {
 
     @Test
     void testRemoveMultipleItems() {
-        itemList.addItem(item1);
-        itemList.addItem(item2);
-        itemList.addItem(item3);
+        addItemsToTestList();
 
         itemList.removeItem(item1);
         itemList.removeItem(item3);
@@ -54,12 +44,27 @@ public class ItemListTest {
 
     @Test
     void testGetItem() {
-        itemList.addItem(item1);
-        itemList.addItem(item2);
-        itemList.addItem(item3);
+        addItemsToTestList();
 
         assertEquals(item1, itemList.getItem(0));
         assertEquals(item3, itemList.getItem(2));
         assertEquals(3, itemList.listSize());
+    }
+
+    @Test
+    void testGetListEmpty() {
+        assertEquals(0, itemList.getList().size());
+    }
+
+    @Test
+    void testGetListWithElements() {
+        addItemsToTestList();
+        assertEquals(3, itemList.getList().size());
+    }
+
+    void addItemsToTestList() {
+        itemList.addItem(item1);
+        itemList.addItem(item2);
+        itemList.addItem(item3);
     }
 }
