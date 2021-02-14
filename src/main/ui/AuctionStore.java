@@ -35,7 +35,7 @@ public class AuctionStore extends Store {
                 if (i > itemList.size()) {
                     System.out.println("Item not found, please select again (any other key to quit): ");
                 } else {
-                    placeBid(i);
+                    placeBidMenu(i);
                     break;
                 }
             } else {
@@ -46,13 +46,28 @@ public class AuctionStore extends Store {
 
     // MODIFIES: this
     // EFFECTS: if the user wishes, they can bet on the item they previously picked
-    private void placeBid(int i) {
+    private void placeBidMenu(int i) {
         this.itemPicked = itemList.get(i - 1);
         displayOneItem(this.itemPicked);
+        char firstBidInput;
+
+        if (this.itemPicked.getCurrentBid() == Item.NO_BID_PRICE) {
+            System.out.println("Would you like to place the first bid (y/n): ");
+            firstBidInput = Character.toLowerCase(keyboard.next().charAt(0));
+            while (firstBidInput != 'y' && firstBidInput != 'n') {
+                System.out.println("Would you like to place the first bid (y/n): ");
+                firstBidInput = Character.toLowerCase(keyboard.next().charAt(0));
+            }
+            this.itemPicked.setFirstBid();
+            System.out.println("First bid placed on " + this.itemPicked.getItemName());
+        } else {
+            placeBid();
+        }
+    }
+
+    private void placeBid() {
         double input;
-
         System.out.println("Place bid: (any other key to quit)");
-
         while (!keyboard.hasNextDouble()) {
             System.out.println("Enter a number value please!");
             keyboard.nextLine();
@@ -66,7 +81,6 @@ public class AuctionStore extends Store {
                 break;
             }
         }
-
         this.itemPicked.increaseBid(input);
         if (this.itemPicked.isSold()) {
             auctionItemList.removeItem(this.itemPicked);

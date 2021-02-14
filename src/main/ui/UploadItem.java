@@ -3,6 +3,7 @@ package ui;
 import model.Item;
 import model.ItemList;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Menu for a user to upload an item to the store.
@@ -17,7 +18,7 @@ public class UploadItem {
     private double buyout;
 
     // EFFECTS: runs the upload item menu
-    public UploadItem(ItemList userItemList, ItemList storeItemList) {
+    public UploadItem(ItemList userItemList, ItemList auctionItemList) {
         this.itemName = inputItemName();
         this.startingPrice = inputStartingPrice();
         this.minBid = inputMinBid();
@@ -25,7 +26,7 @@ public class UploadItem {
 
         this.item = new Item(this.itemName, this.startingPrice, this.minBid, this.buyout);
         userItemList.addItem(this.item);
-        storeItemList.addItem(this.item);
+        auctionItemList.addItem(this.item);
     }
 
     // MODIFIES: this
@@ -39,21 +40,38 @@ public class UploadItem {
     // EFFECTS: gets the item's starting price
     private double inputStartingPrice() {
         System.out.println("Enter starting price: ");
+        while (!keyboard.hasNextDouble()) {
+            System.out.println("Enter a number value please!");
+            keyboard.nextLine();
+        }
         return keyboard.nextDouble();
     }
 
     // MODIFIES: this
     // EFFECTS: gets the items minimum bid increments
     private double inputMinBid() {
-        System.out.println("Enter minimum bid increments");
+        System.out.println("Enter minimum bid increments: ");
+        while (!keyboard.hasNextDouble()) {
+            System.out.println("Enter a number value please!");
+            keyboard.nextLine();
+        }
         return keyboard.nextDouble();
     }
 
     // MODIFIES: this
     // EFFECTS: gets the items buyout price
     private double inputBuyout() {
-        System.out.println("Enter the items buyout");
-        return keyboard.nextDouble();
+        System.out.println("Enter the items buyout price: ");
+        while (!keyboard.hasNextDouble()) {
+            System.out.println("Enter a number value please!");
+            keyboard.nextLine();
+        }
+        double input = keyboard.nextDouble();
+        while (input <= this.startingPrice) {
+            System.out.println("Enter a buyout greater than the starting price: ");
+            input = keyboard.nextDouble();
+        }
+        return input;
     }
 
 }

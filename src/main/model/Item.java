@@ -5,7 +5,7 @@ package model;
 // like, its name, starting price, the minimum bid increments and the
 // buyout price. When a user places a bid on the item, the bid increases as expected.
 public class Item {
-    private static final int NO_BID_PRICE = -1;
+    public static final int NO_BID_PRICE = -1;
 
     private String itemName;
     private double startingPrice;
@@ -46,6 +46,12 @@ public class Item {
             return true;
         }
         return false;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets the first bid to the starting price amount
+    public void setFirstBid() {
+        this.currentBid = this.startingPrice;
     }
 
     public String getItemName() {

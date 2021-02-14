@@ -54,6 +54,7 @@ public class Store {
         System.out.printf(formatDouble, "Minimum bid: $", i.getMinBid());
         System.out.printf(formatDouble, "Buyout: $", i.getBuyout());
         System.out.println();
+        System.out.println();
     }
 
 }
