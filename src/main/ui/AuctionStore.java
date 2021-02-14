@@ -1,5 +1,6 @@
 package ui;
 
+import model.AuctionItemList;
 import model.Item;
 import model.ItemList;
 
@@ -7,12 +8,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AuctionStore extends Store {
+    AuctionItemList auctionItemList;
     List<Item> itemList;
     Item itemPicked;
     Scanner keyboard = new Scanner(System.in);
 
     // EFFECTS: gets the user item list from the user item list class
-    public AuctionStore(ItemList itemList) {
+    public AuctionStore(AuctionItemList itemList) {
+        this.auctionItemList = itemList;
         this.itemList = itemList.getList();
         showItems(this.itemList);
         pickItem();
@@ -21,18 +24,27 @@ public class AuctionStore extends Store {
     // EFFECTS: process user input
     private void pickItem() {
         System.out.println("Pick an item number you wish to bid on (any other key to quit): ");
-        String input = keyboard.next();
         int i;
 
-        if (checkInput(input)) {
-            i = Integer.parseInt(input);
-            placeBidMenu(i);
+        while (true) {
+            String input = keyboard.next();
+            if (checkInput(input)) {
+                i = Integer.parseInt(input);
+                if (i > itemList.size()) {
+                    System.out.println("Item not found, please select again (any other key to quit): ");
+                } else {
+                    placeBid(i);
+                    break;
+                }
+            } else {
+                break;
+            }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: if the user wishes, they can bet on the item they previously picked
-    private void placeBidMenu(int i) {
+    private void placeBid(int i) {
         this.itemPicked = itemList.get(i - 1);
         displayOneItem(this.itemPicked);
         double input;
@@ -53,6 +65,13 @@ public class AuctionStore extends Store {
             }
         }
 
+        this.itemPicked.increaseBid(input);
+        if (this.itemPicked.isSold()) {
+            auctionItemList.removeItem(this.itemPicked);
+            System.out.println("Congratulations on your purchase!");
+        } else {
+            System.out.println("Bid placed on " + this.itemPicked.getItemName());
+        }
     }
 
     // EFFECTS: error check method so the app doesn't crash if the user

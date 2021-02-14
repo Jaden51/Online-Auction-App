@@ -36,7 +36,7 @@ public class Item {
                 this.currentBid = startingPrice;
             }
             this.currentBid += amount;
-            if (!(this.currentBid < buyout)) {
+            if (this.currentBid >= buyout) {
                 this.sold = true;
             }
             return true;
