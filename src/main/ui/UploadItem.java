@@ -1,9 +1,7 @@
 package ui;
 
 import model.Item;
-import model.AuctionItemList;
 import model.ItemList;
-import model.UserItemList;
 
 import java.util.Scanner;
 

@@ -1,9 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AuctionItemList extends ItemList {
+    // EFFECTS: creates a list for the global auction store
     public AuctionItemList() {
         super();
     }

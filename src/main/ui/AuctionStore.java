@@ -2,7 +2,6 @@ package ui;
 
 import model.AuctionItemList;
 import model.Item;
-import model.ItemList;
 
 import java.util.List;
 import java.util.Scanner;
@@ -74,8 +73,8 @@ public class AuctionStore extends Store {
         }
     }
 
-    // EFFECTS: error check method so the app doesn't crash if the user
-    //          inputs a string or a integer
+    // EFFECTS: error check method so the app doesn't crash no matter
+    //          the user input
     private static boolean checkInput(String input) {
         try {
             int i = Integer.parseInt(input);

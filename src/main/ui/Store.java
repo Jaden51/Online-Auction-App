@@ -40,17 +40,16 @@ public class Store {
 
         System.out.printf(formatString, "Item Name: ", i.getItemName());
         System.out.println();
-        System.out.printf(formatDouble, "Starting price: ", i.getStartingPrice());
+        System.out.printf(formatDouble, "Starting price: $", i.getStartingPrice());
 
         if (i.getCurrentBid() == -1) {
             System.out.printf(formatString, "Current bid: ", "No bids");
         } else {
-            System.out.printf(formatDouble, "Current bid: ", i.getCurrentBid());
+            System.out.printf(formatDouble, "Current bid: $", i.getCurrentBid());
         }
 
-        System.out.printf(formatDouble, "Minimum bid: ", i.getMinBid());
-        System.out.printf(formatDouble, "Buyout: ", i.getBuyout());
-        System.out.println();
+        System.out.printf(formatDouble, "Minimum bid: $", i.getMinBid());
+        System.out.printf(formatDouble, "Buyout: $", i.getBuyout());
         System.out.println();
     }
 

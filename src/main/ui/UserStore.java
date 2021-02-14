@@ -2,7 +2,6 @@ package ui;
 
 import model.Item;
 import model.ItemList;
-import model.UserItemList;
 
 import java.util.List;
 
