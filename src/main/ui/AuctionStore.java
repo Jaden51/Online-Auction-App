@@ -6,6 +6,9 @@ import model.Item;
 import java.util.List;
 import java.util.Scanner;
 
+// Represents the general auction store where all users can view items
+// You pick an item based on the index number of said item and can
+// than place a bid on that item.
 public class AuctionStore extends Store {
     AuctionItemList auctionItemList;
     List<Item> itemList;

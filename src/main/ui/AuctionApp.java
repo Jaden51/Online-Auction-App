@@ -6,6 +6,9 @@ import model.UserItemList;
 
 import java.util.Scanner;
 
+// The main page of the auction app. This class initializes the
+// data and shows the main menu. The menu displayed here
+// can lead users to the other parts of the app
 public class AuctionApp {
     protected UserItemList userItemList;
     private AuctionItemList storeItemList;

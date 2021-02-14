@@ -5,6 +5,9 @@ import model.ItemList;
 
 import java.util.Scanner;
 
+// Menu for a user to upload an item to the store.
+// The item uploaded here will show up both in the user store
+// and in the auction store.
 public class UploadItem {
     private Item item;
     private Scanner keyboard = new Scanner(System.in);

@@ -3,6 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Abstract class to represent all the methods common to both the AuctionItemList
+// and the UserItemList. The AuctionItemList represents the global store where
+// everyone can place bids and view items. The UserItemList represents the personal store
+// of each user to view their own items they put up for auction.
 public abstract class ItemList {
     private List<Item> itemList;
 
@@ -23,6 +27,7 @@ public abstract class ItemList {
         itemList.add(item);
     }
 
+    // REQUIRES: the current item list to not be empty
     // MODIFIES: this
     // EFFECTS: looks in the array to find the item the user wants
     //          to check status of

@@ -5,6 +5,7 @@ import model.ItemList;
 
 import java.util.List;
 
+// Represents the menu for the user store where the user can view their items
 public class UserStore extends Store {
     List<Item> itemList;
 

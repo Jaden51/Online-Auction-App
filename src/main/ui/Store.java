@@ -6,6 +6,9 @@ import model.UserItemList;
 
 import java.util.List;
 
+// General class for both the general auction store and the personal
+// user store. Has the methods for item display to make things more clear
+// and abstract and a method to show all the items currently in both stores
 public class Store {
 
     public Store(UserItemList itemList) {
