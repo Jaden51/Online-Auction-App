@@ -28,7 +28,7 @@ an application which makes auctions easy and accessible to everyone online.
 
 ## User Stories
 In the context of a seller
-- As a user, I want to be able to put an item up for auction
+- As a user, I want to be able to put an item up for auction (add the item to the auction store and user store)
 - As a user, I want to be able to add all the required fields to my item up for auction
 - As a user, I want to be able to check the status of my items up for sale
 
