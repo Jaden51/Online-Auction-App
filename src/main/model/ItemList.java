@@ -10,6 +10,7 @@ import java.util.List;
 public abstract class ItemList {
     private List<Item> itemList;
 
+    // EFFECTS: creates an ArrayList to store all the items
     public ItemList() {
         itemList = new ArrayList<>();
     }

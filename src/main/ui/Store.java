@@ -11,14 +11,17 @@ import java.util.List;
 // and abstract and a method to show all the items currently in both stores
 public class Store {
 
+    // EFFECTS: creates the personal store for the user
     public Store(UserItemList itemList) {
         new UserStore(itemList);
     }
 
+    // EFFECTS: creates the general store for all users
     public Store(AuctionItemList itemList) {
         new AuctionStore(itemList);
     }
 
+    // EFFECTS: general constructor
     public Store() {}
 
     // MODIFIES: this

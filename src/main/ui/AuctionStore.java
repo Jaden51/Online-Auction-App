@@ -58,13 +58,19 @@ public class AuctionStore extends Store {
                 System.out.println("Would you like to place the first bid (y/n): ");
                 firstBidInput = Character.toLowerCase(keyboard.next().charAt(0));
             }
-            this.itemPicked.setFirstBid();
-            System.out.println("First bid placed on " + this.itemPicked.getItemName());
+            if (firstBidInput == 'y') {
+                this.itemPicked.setFirstBid();
+                System.out.println("First bid placed on " + this.itemPicked.getItemName());
+            }
         } else {
             placeBid();
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Takes the item previously selected by the user
+    //          and than the user can place a bid on that item.
+    //          Includes error checking
     private void placeBid() {
         double input;
         System.out.println("Place bid: ");
