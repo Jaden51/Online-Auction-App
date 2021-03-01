@@ -31,6 +31,8 @@ In the context of a seller
 - As a user, I want to be able to put an item up for auction (add the item to the auction store and user store)
 - As a user, I want to be able to add all the required fields to my item up for auction
 - As a user, I want to be able to check the status of my items up for sale
+- As a user, I want to be able to save all my items which I posted to the global auction to a file
+- As a user, I want to be able to reload all the items in my shop even after quitting the application (so I don't have to post them again) 
 
 In the context of a buyer
 - As a user, I want to be able to search and see the list of items to bid on
