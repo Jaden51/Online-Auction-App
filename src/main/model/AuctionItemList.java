@@ -6,7 +6,7 @@ package model;
 // or remove items when an item gets sold.
 public class AuctionItemList extends ItemList {
     // EFFECTS: creates a list for the global auction store
-    public AuctionItemList() {
-        super();
+    public AuctionItemList(String username) {
+        super(username);
     }
 }

@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +11,18 @@ import java.util.List;
 // and the UserItemList. The AuctionItemList represents the global store where
 // everyone can place bids and view items. The UserItemList represents the personal store
 // of each user to view their own items they put up for auction.
-public abstract class ItemList {
+public abstract class ItemList implements Writable {
     private List<Item> itemList;
+    private String username;
 
     // EFFECTS: creates an ArrayList to store all the items
-    public ItemList() {
+    public ItemList(String userName) {
         itemList = new ArrayList<>();
+        this.username = userName;
+    }
+
+    public String getUsername() {
+        return this.username;
     }
 
     // MODIFIES: this
@@ -45,5 +55,23 @@ public abstract class ItemList {
     // EFFECTS: get the list from the users store
     public List<Item> getList() {
         return itemList;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("username", username);
+        json.put("userStoreItems", itemListToJson());
+        return json;
+    }
+
+    private JSONArray itemListToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Item i : getList()) {
+            jsonArray.put(i.toJson());
+        }
+
+        return jsonArray;
     }
 }

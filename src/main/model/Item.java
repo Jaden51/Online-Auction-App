@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistance.Writable;
+
 // Represents an item currently in the auction app ecosystem.
 // It has all the features a regular item up for auction would have
 // like, its name, starting price, the minimum bid increments and the
 // buyout price. When a user places a bid on the item, the bid increases as expected.
-public class Item {
+public class Item implements Writable {
     public static final int NO_BID_PRICE = -1;
 
     private String itemName;
@@ -49,6 +52,19 @@ public class Item {
     // EFFECTS: sets the first bid to the starting price amount
     public void setFirstBid() {
         this.currentBid = this.startingPrice;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("itemName", itemName);
+        json.put("startingPrice", startingPrice);
+        json.put("minBid", minBid);
+        json.put("buyout", buyout);
+        json.put("currentBid", currentBid);
+        json.put("sold", sold);
+
+        return json;
     }
 
     public String getItemName() {
