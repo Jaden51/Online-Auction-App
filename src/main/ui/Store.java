@@ -26,16 +26,18 @@ public class Store {
 
     // MODIFIES: this
     // EFFECTS: shows the items the user is currently putting up for auction
-    protected void showItems(List<Item> itemList) {
+    protected boolean showItems(List<Item> itemList) {
         int index = 1;
         if (itemList.size() == 0) {
             System.out.println("No items found");
+            return false;
         } else {
             for (Item i : itemList) {
                 System.out.print(index + ". ");
                 displayOneItem(i);
                 index++;
             }
+            return true;
         }
     }
 

@@ -44,7 +44,7 @@ public class AuctionApp {
     // EFFECTS: initializes fields
     private void initialize() {
         keyboard = new Scanner(System.in);
-        userItemList = new UserItemList("user");
+        userItemList = new UserItemList("jh51");
         storeItemList = new AuctionItemList("general");
 
         addItemsAlreadyInStore();
