@@ -2,7 +2,6 @@ package ui;
 
 import model.AuctionItemList;
 import model.Item;
-import model.ItemList;
 import model.UserItemList;
 import persistance.JsonReader;
 import persistance.JsonWriter;
@@ -14,9 +13,12 @@ import java.util.Scanner;
 // data and shows the main menu. The menu displayed here
 // can lead users to the other parts of the app
 public class AuctionApp extends Store {
-    private static final String JSON_STORE = "./data/userStore.json";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private static final String JSON_USER_STORE = "./data/userStore.json";
+    private static final String JSON_AUCTION_STORE = "./data/auctionStore.json";
+    private JsonWriter jsonWriterUserStore;
+    private JsonReader jsonReaderUserStore;
+    private JsonWriter jsonWriterAuctionStore;
+    private JsonReader jsonReaderAuctionStore;
     protected UserItemList userItemList;
     protected AuctionItemList storeItemList;
     private Scanner keyboard;
@@ -34,6 +36,7 @@ public class AuctionApp extends Store {
         String input;
 
         initialize();
+        loadItemsAuctionStore();
 
         while (run) {
             menu();
@@ -50,12 +53,13 @@ public class AuctionApp extends Store {
     // MODIFIES: this
     // EFFECTS: initializes fields
     private void initialize() {
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriterUserStore = new JsonWriter(JSON_USER_STORE);
+        jsonReaderUserStore = new JsonReader(JSON_USER_STORE);
+        jsonWriterAuctionStore = new JsonWriter(JSON_AUCTION_STORE);
+        jsonReaderAuctionStore = new JsonReader(JSON_AUCTION_STORE);
         keyboard = new Scanner(System.in);
         userItemList = new UserItemList("jh51");
         storeItemList = new AuctionItemList("general");
-        addItemsAlreadyInStore();
     }
 
     // EFFECTS: displays the stores menu
@@ -75,6 +79,7 @@ public class AuctionApp extends Store {
         switch (input) {
             case "p":
                 new UploadItem(userItemList, storeItemList);
+                saveItemsAuctionStore();
                 break;
             case "s":
                 new Store(storeItemList);
@@ -83,10 +88,10 @@ public class AuctionApp extends Store {
                 new Store(userItemList);
                 break;
             case "l":
-                loadItems();
+                loadItemsUserStore();
                 break;
             case "k":
-                saveItems();
+                saveItemsUserStore();
                 break;
             default:
                 System.out.println("Invalid input");
@@ -95,42 +100,47 @@ public class AuctionApp extends Store {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds items to the auction store to begin to app so the user
-    //          can bid on pre-existing items
-    private void addItemsAlreadyInStore() {
-        Item item1 = new Item("Mike Trout Rookie Card", 1000, 100, 100000);
-        Item item2 = new Item("Worn out nike pants", 10, 1, 100);
-        Item item3 = new Item("Chicago Cubs hat", 20, 3, 200);
-
-        item1.setFirstBid();
-        item1.increaseBid(1000);
-        item3.setFirstBid();
-
-        storeItemList.addItem(item1);
-        storeItemList.addItem(item2);
-        storeItemList.addItem(item3);
-    }
-
-    // MODIFIES: this
     // EFFECTS: loads the user store from file
-    private void loadItems() {
+    private void loadItemsUserStore() {
         try {
-            userItemList = (UserItemList) jsonReader.read();
-            System.out.println("Loaded " + userItemList.getUsername() + " from " + JSON_STORE);
+            userItemList = jsonReaderUserStore.readUserList();
+            System.out.println("Loaded " + userItemList.getUsername() + " from " + JSON_USER_STORE);
         } catch (Exception e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            System.out.println("Unable to read from file: " + JSON_USER_STORE);
         }
     }
 
     // EFFECTS: saves the workroom to file
-    private void saveItems() {
+    private void saveItemsUserStore() {
         try {
-            jsonWriter.open();
-            jsonWriter.write(userItemList);
-            jsonWriter.close();
-            System.out.println("Saved " + userItemList.getUsername() + " to " + JSON_STORE);
+            jsonWriterUserStore.open();
+            jsonWriterUserStore.write(userItemList);
+            jsonWriterUserStore.close();
+            System.out.println("Saved " + userItemList.getUsername() + " to " + JSON_USER_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            System.out.println("Unable to write to file: " + JSON_USER_STORE);
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveItemsAuctionStore() {
+        try {
+            jsonWriterAuctionStore.open();
+            jsonWriterAuctionStore.write(storeItemList);
+            jsonWriterAuctionStore.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_AUCTION_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads the user store from file
+    private void loadItemsAuctionStore() {
+        try {
+            storeItemList = jsonReaderAuctionStore.readAuctionList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Unable to read from file: " + JSON_AUCTION_STORE);
         }
     }
 

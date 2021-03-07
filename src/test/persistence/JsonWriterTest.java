@@ -47,7 +47,7 @@ public class JsonWriterTest extends JsonTest {
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyUserStore.json");
-            itemList = reader.read();
+            itemList = reader.readUserList();
             assertEquals("Jaden Hums", itemList.getUsername());
             assertEquals(0, itemList.getList().size());
         } catch (IOException e) {
@@ -66,7 +66,7 @@ public class JsonWriterTest extends JsonTest {
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralUserStore.json");
-            itemList = reader.read();
+            itemList = reader.readUserList();
             assertEquals("Jaden Hums", itemList.getUsername());
             List<Item> itemListExpected = itemList.getList();
             assertEquals(2, itemListExpected.size());

@@ -1,5 +1,6 @@
 package persistance;
 
+import model.AuctionItemList;
 import model.Item;
 import model.ItemList;
 import model.UserItemList;
@@ -23,10 +24,16 @@ public class JsonReader {
 
     // EFFECTS: reads itemList from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public ItemList read() throws IOException {
+    public UserItemList readUserList() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseItemList(jsonObject);
+        return parseUserList(jsonObject);
+    }
+
+    public AuctionItemList readAuctionList() throws IOException {
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseAuctionList(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -41,9 +48,16 @@ public class JsonReader {
     }
 
     // EFFECTS: parses itemList from JSON object and returns it
-    private ItemList parseItemList(JSONObject jsonObject) {
+    private UserItemList parseUserList(JSONObject jsonObject) {
         String username = jsonObject.getString("username");
-        ItemList il = new UserItemList(username);
+        UserItemList il = new UserItemList(username);
+        addItems(il, jsonObject);
+        return il;
+    }
+
+    private AuctionItemList parseAuctionList(JSONObject jsonObject) {
+        String username = jsonObject.getString("username");
+        AuctionItemList il = new AuctionItemList(username);
         addItems(il, jsonObject);
         return il;
     }

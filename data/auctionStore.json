@@ -1,0 +1,29 @@
+{
+    "userStoreItems": [
+        {
+            "minBid": 100,
+            "sold": false,
+            "itemName": "Mike Trout Rookie Card",
+            "currentBid": -1,
+            "startingPrice": 1000,
+            "buyout": 100000
+        },
+        {
+            "minBid": 1,
+            "sold": false,
+            "itemName": "Worn out nike pants",
+            "currentBid": -1,
+            "startingPrice": 10,
+            "buyout": 100
+        },
+        {
+            "minBid": 3,
+            "sold": false,
+            "itemName": "Chicago Cubs hat",
+            "currentBid": -1,
+            "startingPrice": 20,
+            "buyout": 200
+        }
+    ],
+    "username": "general"
+}
