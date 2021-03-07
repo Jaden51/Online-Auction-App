@@ -1,5 +1,6 @@
 package persistence;
 
+import model.AuctionItemList;
 import model.Item;
 import model.ItemList;
 import model.UserItemList;
@@ -17,12 +18,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JsonWriterTest extends JsonTest {
 
     private ItemList itemList;
+    private ItemList auctionlist;
     private Item item1;
     private Item item2;
 
     @BeforeEach
     void setup() {
         itemList = new UserItemList("Jaden Hums");
+        auctionlist = new AuctionItemList("Jaden Hums");
         item1 = new Item("hat", 100, 10, 1000);
         item2 = new Item("pants", 200, 1, 500);
     }
@@ -56,6 +59,23 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
+    void testWriterEmptyAuctionStore() {
+        try {
+            JsonWriter writer = new JsonWriter("./data/testWriterEmptyStore.json");
+            writer.open();
+            writer.write(itemList);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterEmptyStore.json");
+            itemList = reader.readUserList();
+            assertEquals("Jaden Hums", itemList.getUsername());
+            assertEquals(0, itemList.getList().size());
+        } catch (IOException e) {
+            fail("Unexpected IOException");
+        }
+    }
+
+    @Test
     void testWriterGeneralUserStore() {
         try {
             itemList.addItem(item1);
@@ -69,6 +89,30 @@ public class JsonWriterTest extends JsonTest {
             itemList = reader.readUserList();
             assertEquals("Jaden Hums", itemList.getUsername());
             List<Item> itemListExpected = itemList.getList();
+            assertEquals(2, itemListExpected.size());
+            checkItem("hat", 100, 10, 1000,
+                    -1, false, itemListExpected.get(0));
+            checkItem("pants", 200, 1, 500,
+                    -1, false, itemListExpected.get(1));
+        } catch (IOException e) {
+            fail("Unexpected IOException");
+        }
+    }
+
+    @Test
+    void testWriterGeneralAuctionStore() {
+        try {
+            auctionlist.addItem(item1);
+            auctionlist.addItem(item2);
+            JsonWriter writer = new JsonWriter("./data/testWriterGeneralAuctionStore.json");
+            writer.open();
+            writer.write(auctionlist);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterGeneralAuctionStore.json");
+            auctionlist = reader.readAuctionList();
+            assertEquals("Jaden Hums", auctionlist.getUsername());
+            List<Item> itemListExpected = auctionlist.getList();
             assertEquals(2, itemListExpected.size());
             checkItem("hat", 100, 10, 1000,
                     -1, false, itemListExpected.get(0));
