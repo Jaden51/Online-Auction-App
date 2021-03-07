@@ -2,16 +2,23 @@ package ui;
 
 import model.AuctionItemList;
 import model.Item;
+import model.ItemList;
 import model.UserItemList;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 // The main page of the auction app. This class initializes the
 // data and shows the main menu. The menu displayed here
 // can lead users to the other parts of the app
-public class AuctionApp {
+public class AuctionApp extends Store {
+    private static final String JSON_STORE = "./data/userStore.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     protected UserItemList userItemList;
-    private AuctionItemList storeItemList;
+    protected AuctionItemList storeItemList;
     private Scanner keyboard;
 
     // EFFECTS: runs the auction store
@@ -43,10 +50,11 @@ public class AuctionApp {
     // MODIFIES: this
     // EFFECTS: initializes fields
     private void initialize() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         keyboard = new Scanner(System.in);
         userItemList = new UserItemList("jh51");
         storeItemList = new AuctionItemList("general");
-
         addItemsAlreadyInStore();
     }
 
@@ -56,6 +64,8 @@ public class AuctionApp {
         System.out.println("p -> Place item on auction store");
         System.out.println("s -> Search store");
         System.out.println("v -> View your items");
+        System.out.println("l -> Load your items");
+        System.out.println("k -> Save your items");
         System.out.println("q -> Quit");
     }
 
@@ -66,11 +76,17 @@ public class AuctionApp {
             case "p":
                 new UploadItem(userItemList, storeItemList);
                 break;
+            case "s":
+                new Store(storeItemList);
+                break;
             case "v":
                 new Store(userItemList);
                 break;
-            case "s":
-                new Store(storeItemList);
+            case "l":
+                loadItems();
+                break;
+            case "k":
+                saveItems();
                 break;
             default:
                 System.out.println("Invalid input");
@@ -94,5 +110,29 @@ public class AuctionApp {
         storeItemList.addItem(item2);
         storeItemList.addItem(item3);
     }
+
+    // MODIFIES: this
+    // EFFECTS: loads the user store from file
+    private void loadItems() {
+        try {
+            userItemList = (UserItemList) jsonReader.read();
+            System.out.println("Loaded " + userItemList.getUsername() + " from " + JSON_STORE);
+        } catch (Exception e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveItems() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(userItemList);
+            jsonWriter.close();
+            System.out.println("Saved " + userItemList.getUsername() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
 
 }

@@ -1,1 +1,21 @@
-{}
+{
+    "userStoreItems": [
+        {
+            "minBid": 1,
+            "sold": false,
+            "itemName": "1",
+            "currentBid": -1,
+            "startingPrice": 1,
+            "buyout": 5
+        },
+        {
+            "minBid": 4,
+            "sold": false,
+            "itemName": "2",
+            "currentBid": -1,
+            "startingPrice": 3,
+            "buyout": 5
+        }
+    ],
+    "username": "jh51"
+}
