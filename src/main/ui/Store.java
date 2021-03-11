@@ -2,29 +2,22 @@ package ui;
 
 import model.Item;
 import model.AuctionItemList;
+import model.ItemList;
 import model.UserItemList;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 // General class for both the general auction store and the personal
 // user store. Has the methods for item display to make things more clear
 // and abstract and a method to show all the items currently in both stores
-public class Store {
+public abstract class Store {
 
-    // EFFECTS: creates the personal store for the user
-    public Store(UserItemList itemList) {
-        new UserStore(itemList);
-    }
+    public abstract void updateLists(ItemList userItemList, ItemList auctionItemList);
 
-    // EFFECTS: creates the general store for all users
-    public Store(AuctionItemList itemList) {
-        new AuctionStore(itemList);
-    }
-
-    // EFFECTS: general constructor
-    public Store() {}
+    public abstract void showItems();
 
     // MODIFIES: this
     // EFFECTS: shows the items the user is currently putting up for auction

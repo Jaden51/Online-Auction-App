@@ -26,8 +26,8 @@ public class JsonWriterTest extends JsonTest {
     void setup() {
         itemList = new UserItemList("Jaden Hums");
         auctionlist = new AuctionItemList("Jaden Hums");
-        item1 = new Item("hat", 100, 10, 1000);
-        item2 = new Item("pants", 200, 1, 500);
+        item1 = new Item("hat", 100, 10, 1000, Item.NO_BID_PRICE, false);
+        item2 = new Item("pants", 200, 1, 500, Item.NO_BID_PRICE, false);
     }
 
     @Test

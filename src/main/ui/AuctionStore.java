@@ -2,7 +2,9 @@ package ui;
 
 import model.AuctionItemList;
 import model.Item;
+import model.ItemList;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,17 +12,24 @@ import java.util.Scanner;
 // You pick an item based on the index number of said item and can
 // than place a bid on that item.
 public class AuctionStore extends Store {
-    AuctionItemList auctionItemList;
     List<Item> itemList;
     Item itemPicked;
-    Scanner keyboard = new Scanner(System.in);
+    private Scanner keyboard;
+
+    private ItemList auctionItemList;
+    private ItemList userItemList;
 
     // EFFECTS: gets the user item list from the user item list class
-    public AuctionStore(AuctionItemList itemList) {
-        this.auctionItemList = itemList;
-        this.itemList = itemList.getList();
-        showItems(this.itemList);
-        pickItem();
+    public AuctionStore(ItemList userItemList, ItemList auctionItemList) {
+        this.auctionItemList = auctionItemList;
+        this.itemList = auctionItemList.getList();
+        keyboard = new Scanner(System.in);
+    }
+
+    @Override
+    public void updateLists(ItemList userItemList, ItemList auctionItemList) {
+        this.auctionItemList = auctionItemList;
+        this.userItemList = userItemList;
     }
 
     // EFFECTS: process user input
@@ -105,6 +114,13 @@ public class AuctionStore extends Store {
             return false;
         }
         return true;
+    }
+
+    // EFFECTS: shows the items in the general store
+    @Override
+    public void showItems() {
+        showItems(this.itemList);
+        pickItem();
     }
 
 }

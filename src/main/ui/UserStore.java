@@ -2,18 +2,28 @@ package ui;
 
 import model.Item;
 import model.ItemList;
+import model.UserItemList;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 
 // Represents the menu for the user store where the user can view their items
 public class UserStore extends Store {
-    List<Item> itemList;
+    private ItemList userItemList;
 
-    // EFFECTS: gets the user item list from the user item list class
-    public UserStore(ItemList itemList) {
-        this.itemList = itemList.getList();
-        showItems(this.itemList);
+    public UserStore(ItemList userItemList, ItemList auctionItemList) {
+        this.userItemList = userItemList;
+    }
+
+    @Override
+    public void showItems() {
+        showItems(userItemList.getList());
+    }
+
+    @Override
+    public void updateLists(ItemList userItemList, ItemList auctionItemList) {
+        this.userItemList = userItemList;
     }
 
 }

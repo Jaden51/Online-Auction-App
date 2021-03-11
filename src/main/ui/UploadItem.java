@@ -3,13 +3,12 @@ package ui;
 import model.Item;
 import model.ItemList;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Menu for a user to upload an item to the store.
 // The item uploaded here will show up both in the user store
 // and in the auction store.
-public class UploadItem {
+public class UploadItem extends Store {
     private Item item;
     private Scanner keyboard = new Scanner(System.in);
     private String itemName;
@@ -17,16 +16,38 @@ public class UploadItem {
     private double minBid;
     private double buyout;
 
-    // EFFECTS: runs the upload item menu
+    private ItemList userItemList;
+    private ItemList auctionItemList;
+
     public UploadItem(ItemList userItemList, ItemList auctionItemList) {
+        this.userItemList = userItemList;
+        this.auctionItemList = auctionItemList;
+    }
+
+    @Override
+    public void showItems() {
+        showItems(userItemList.getList());
+    }
+
+    @Override
+    public void updateLists(ItemList userItemList, ItemList auctionItemList) {
+        this.userItemList = userItemList;
+        this.auctionItemList = auctionItemList;
+    }
+
+    public void runUploadItem() {
         this.itemName = inputItemName();
         this.startingPrice = inputStartingPrice();
         this.minBid = inputMinBid();
         this.buyout = inputBuyout();
 
-        this.item = new Item(this.itemName, this.startingPrice, this.minBid, this.buyout);
+        this.item = new Item(this.itemName, this.startingPrice, this.minBid, this.buyout, Item.NO_BID_PRICE, false);
         userItemList.addItem(this.item);
         auctionItemList.addItem(this.item);
+
+        System.out.println("Your item has been uploaded to the store successfully!");
+        displayOneItem(this.item);
+
     }
 
     // MODIFIES: this
@@ -73,5 +94,7 @@ public class UploadItem {
         }
         return input;
     }
+
+
 
 }

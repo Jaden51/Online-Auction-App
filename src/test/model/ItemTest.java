@@ -11,8 +11,8 @@ public class ItemTest {
 
     @BeforeEach
     void setup() {
-        item1 = new Item("hat", 100, 10, 1000);
-        item2 = new Item("pants", 100, 0, 1000);
+        item1 = new Item("hat", 100, 10, 1000, Item.NO_BID_PRICE, false);
+        item2 = new Item("pants", 100, 0, 1000, Item.NO_BID_PRICE, false);
     }
 
     @Test

@@ -10,10 +10,10 @@ import persistance.Writable;
 public class Item implements Writable {
     public static final int NO_BID_PRICE = -1;
 
-    private String itemName;
-    private double startingPrice;
-    private double minBid;
-    private double buyout;
+    private final String itemName;
+    private final double startingPrice;
+    private final double minBid;
+    private final double buyout;
     private double currentBid;
     private boolean sold;
 
@@ -21,14 +21,14 @@ public class Item implements Writable {
     // EFFECTS: sets the name of the item; the price of the item;
     //          the minimum bid increase to place on the item;
     //          and the buy out of the item
-    public Item(String itemName, double startingPrice, double minBid, double buyout) {
+    public Item(String itemName, double startingPrice, double minBid, double buyout, double currentBid, boolean sold) {
         this.itemName = itemName;
         this.startingPrice = startingPrice;
-        this.currentBid = NO_BID_PRICE;
+        this.currentBid = currentBid;
         this.minBid = minBid;
         this.buyout = buyout;
 
-        this.sold = false;
+        this.sold = sold;
     }
 
     // REQUIRES: amount >= minBid
