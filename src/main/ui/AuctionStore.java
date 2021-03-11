@@ -26,6 +26,8 @@ public class AuctionStore extends Store {
         keyboard = new Scanner(System.in);
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates the lists to match the ones from data persistence
     @Override
     public void updateLists(ItemList userItemList, ItemList auctionItemList) {
         this.auctionItemList = auctionItemList;

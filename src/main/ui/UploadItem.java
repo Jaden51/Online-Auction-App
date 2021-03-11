@@ -19,22 +19,28 @@ public class UploadItem extends Store {
     private ItemList userItemList;
     private ItemList auctionItemList;
 
+    // EFFECTS: initializes the item lists
     public UploadItem(ItemList userItemList, ItemList auctionItemList) {
         this.userItemList = userItemList;
         this.auctionItemList = auctionItemList;
     }
 
+    // EFFECTS: displays the items
     @Override
     public void showItems() {
         showItems(userItemList.getList());
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates the list to match the data in the data persistence
     @Override
     public void updateLists(ItemList userItemList, ItemList auctionItemList) {
         this.userItemList = userItemList;
         this.auctionItemList = auctionItemList;
     }
 
+    // MODIFIES: this
+    // EFFECTS: runs the menu to upload an item
     public void runUploadItem() {
         this.itemName = inputItemName();
         this.startingPrice = inputStartingPrice();

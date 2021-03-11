@@ -1,13 +1,13 @@
 package persistance;
 
 import model.ItemList;
-import model.UserItemList;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+// The writer object which takes a list and writes it to the respective JSON files
 // CITATION: Code modeled from JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;

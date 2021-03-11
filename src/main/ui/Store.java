@@ -1,13 +1,7 @@
 package ui;
 
 import model.Item;
-import model.AuctionItemList;
 import model.ItemList;
-import model.UserItemList;
-import persistance.JsonReader;
-import persistance.JsonWriter;
-
-import java.io.FileNotFoundException;
 import java.util.List;
 
 // General class for both the general auction store and the personal

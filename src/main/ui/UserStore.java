@@ -12,15 +12,18 @@ import java.util.List;
 public class UserStore extends Store {
     private ItemList userItemList;
 
+    // EFFECTS: initializes the user list
     public UserStore(ItemList userItemList, ItemList auctionItemList) {
         this.userItemList = userItemList;
     }
 
+    // EFFECTS: displays the users items
     @Override
     public void showItems() {
         showItems(userItemList.getList());
     }
 
+    // EFFECTS: updates the users items based on JSON data
     @Override
     public void updateLists(ItemList userItemList, ItemList auctionItemList) {
         this.userItemList = userItemList;

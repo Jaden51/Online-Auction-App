@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// Object to read from the item lists to display contents
 // CITATION: Code modeled from JsonSerializationDemo
 public class JsonReader {
     private String source;

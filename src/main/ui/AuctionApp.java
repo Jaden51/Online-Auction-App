@@ -29,7 +29,7 @@ public class AuctionApp {
     protected JsonWriter jsonWriterAuctionStore;
     protected JsonReader jsonReaderAuctionStore;
 
-
+    // EFFECTS: runs the app
     public AuctionApp() {
         initializeJson();
         runActionApp();
@@ -70,6 +70,8 @@ public class AuctionApp {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the JSON objects
     private void initializeJson() {
         jsonWriterUserStore = new JsonWriter(JSON_USER_STORE);
         jsonReaderUserStore = new JsonReader(JSON_USER_STORE);
@@ -126,8 +128,6 @@ public class AuctionApp {
         }
     }
 
-
-
     // EFFECTS: saves the workroom to file
     protected void saveItemsAuctionStore() {
         try {
@@ -162,6 +162,7 @@ public class AuctionApp {
         }
     }
 
+    // EFFECTS: updates the lists in the stores to match the data persistance
     public void updateLists() {
         userStore.updateLists(userItemList, auctionItemList);
         uploadItem.updateLists(userItemList, auctionItemList);
