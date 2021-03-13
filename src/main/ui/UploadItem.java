@@ -21,7 +21,7 @@ public class UploadItem extends Store {
         super(userItemList, auctionItemList, parent);
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, parent
     // EFFECTS: creates the button to upload items and adds listener
     @Override
     protected void createComponents(JComponent parent) {
@@ -31,7 +31,7 @@ public class UploadItem extends Store {
         addToParentButton(parent);
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, parent
     // EFFECTS: creates the text fields for the user to enter an item
     protected void createTextFields(JComponent parent) {
         itemNameField = new JTextField(15);
@@ -49,6 +49,7 @@ public class UploadItem extends Store {
         addToParentFields(parent);
     }
 
+    // MODIFIES: parent
     // EFFECTS: adds components to the parent JPanel
     public void addToParentFields(JComponent parent) {
         parent.add(itemNameField);
@@ -65,7 +66,7 @@ public class UploadItem extends Store {
         this.auctionItemList = auctionItemList;
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, parent
     // EFFECTS: uploads the item to the user store and the auction store
     public void uploadItem(JComponent parent) {
         String itemNameText = itemNameField.getText();

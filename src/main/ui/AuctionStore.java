@@ -4,25 +4,26 @@ import model.Item;
 import model.ItemList;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.util.List;
-import java.util.Scanner;
 
 // Represents the general auction store where all users can view items
 // You pick an item based on the index number of said item and can
 // than place a bid on that item.
 public class AuctionStore extends Store {
-    List<Item> itemList;
-    private Scanner keyboard;
+
+    private JLabel nameLabel;
+    private JLabel startingPriceLabel;
+    private JLabel currentBidLabel;
+    private JLabel minBidLabel;
+    private JLabel buyoutLabel;
+
+    private JTextField placeBidField;
 
     // EFFECTS: gets the user item list from the user item list class
     public AuctionStore(ItemList userItemList, ItemList auctionItemList, JComponent parent) {
         super(userItemList, auctionItemList, parent);
-        itemList = this.auctionItemList.getList();
-        keyboard = new Scanner(System.in);
     }
 
+    // EFFECTS: creates a list model to be used by the JList
     protected DefaultListModel toListModel() {
         DefaultListModel listModel = new DefaultListModel();
         for (Item i : auctionItemList.getList()) {
@@ -31,24 +32,62 @@ public class AuctionStore extends Store {
         return listModel;
     }
 
+    // MODIFIES: this, parent
+    // EFFECTS: creates the component relative to the store
     @Override
     protected void createComponents(JComponent parent) {
-        button = new JButton("Place bid");
-        button.setEnabled(false);
         list = new JList(toListModel());
         list.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 displayItemInfo((String) list.getSelectedValue());
             }
         });
-        addToParentLists(parent);
+
+        scrollPane = new JScrollPane();
+        scrollPane.setViewportView(list);
+        parent.add(scrollPane);
+
+        createLabels(parent);
+
+        button = new JButton("Place bid");
+        button.setEnabled(false);
         addToParentButton(parent);
     }
 
-    private void displayItemInfo(String itemName) {
-        System.out.println(itemName);
+    protected void createLabels(JComponent parent) {
+        nameLabel = new JLabel();
+        parent.add(nameLabel);
+
+        startingPriceLabel = new JLabel();
+        parent.add(startingPriceLabel);
+
+        currentBidLabel = new JLabel();
+        parent.add(currentBidLabel);
+
+        minBidLabel = new JLabel();
+        parent.add(minBidLabel);
+
+        buyoutLabel = new JLabel();
+        parent.add(buyoutLabel);
     }
 
+    // MODIFIES: this, parent
+    // EFFECTS: displays the item information when the user selects it
+    //          enables the place bid button
+    private void displayItemInfo(String itemName) {
+        for (Item i : auctionItemList.getList()) {
+            if (itemName == i.getItemName()) {
+                nameLabel.setText("Item Name: " + i.getItemName());
+                startingPriceLabel.setText("Starting price: $" + i.getStartingPrice());
+                currentBidLabel.setText("Current bid: $" + i.getCurrentBid());
+                minBidLabel.setText("Minimum bid: $" + i.getMinBid());
+                buyoutLabel.setText("Buyout: $" + i.getBuyout());
+            }
+        }
+    }
+
+    // MODIFIES: this, parent
+    // EFFECTS: updates the JList component when user updates the stores
     public void updateJList() {
         list.setModel(toListModel());
     }

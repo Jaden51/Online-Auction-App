@@ -23,14 +23,20 @@ public class UserStore extends Store {
         return listModel;
     }
 
+    // MODIFIES: this, parent
+    // EFFECTS: updates the JList to always display updated information
     public void updateJList() {
         list.setModel(toListModel());
     }
 
+    // MODIFIES: this, parent
+    // EFFECTS: creates the components relative to the user store
     @Override
     protected void createComponents(JComponent parent) {
         list = new JList(toListModel());
-        addToParentLists(parent);
+        scrollPane = new JScrollPane();
+        scrollPane.setViewportView(list);
+        parent.add(scrollPane);
     }
 
     // EFFECTS: updates the users items based on JSON data

@@ -86,7 +86,7 @@ public class AuctionApp extends JFrame implements ItemListener {
         userStoreCard = new JPanel();
         userStore = new UserStore(userItemList, auctionItemList, userStoreCard);
 
-        auctionStoreCard = new JPanel();
+        auctionStoreCard = new JPanel(new GridLayout(7, 1));
         auctionStore = new AuctionStore(userItemList, auctionItemList, auctionStoreCard);
 
         uploadItemCard = new JPanel();
