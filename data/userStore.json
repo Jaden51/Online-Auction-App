@@ -1,11 +1,21 @@
 {
-    "userStoreItems": [{
-        "minBid": 2,
-        "sold": false,
-        "itemName": "Shirt",
-        "currentBid": -1,
-        "startingPrice": 1,
-        "buyout": 3
-    }],
+    "userStoreItems": [
+        {
+            "minBid": 1,
+            "sold": false,
+            "itemName": "shirt",
+            "currentBid": 1,
+            "startingPrice": 1,
+            "buyout": 3
+        },
+        {
+            "minBid": 2,
+            "sold": false,
+            "itemName": "pants",
+            "currentBid": -1,
+            "startingPrice": 1,
+            "buyout": 3
+        }
+    ],
     "username": "jh51"
 }

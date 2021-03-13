@@ -2,6 +2,8 @@ package ui;
 
 import model.Item;
 import model.ItemList;
+
+import javax.swing.*;
 import java.util.List;
 
 // General class for both the general auction store and the personal
@@ -9,46 +11,38 @@ import java.util.List;
 // and abstract and a method to show all the items currently in both stores
 public abstract class Store {
 
-    public abstract void updateLists(ItemList userItemList, ItemList auctionItemList);
+    protected JButton button;
+    protected JList list;
+    protected ItemList userItemList;
+    protected ItemList auctionItemList;
 
-    public abstract void showItems();
-
-    // MODIFIES: this
-    // EFFECTS: shows the items the user is currently putting up for auction
-    protected boolean showItems(List<Item> itemList) {
-        int index = 1;
-        if (itemList.size() == 0) {
-            System.out.println("No items found");
-            return false;
-        } else {
-            for (Item i : itemList) {
-                System.out.print(index + ". ");
-                displayOneItem(i);
-                index++;
-            }
-            return true;
-        }
+    public Store(ItemList userItemList, ItemList auctionItemList, JComponent parent) {
+        initializeFields(userItemList, auctionItemList);
+        createComponents(parent);
     }
 
-    // EFFECTS: menu display for one item
-    protected void displayOneItem(Item i) {
-        String formatDouble = "%s%-15.2f";
-        String formatString = "%s%-15s";
+    // EFFECTS: creates button to activate tool
+    protected abstract void createComponents(JComponent parent);
 
-        System.out.printf(formatString, "Item Name: ", i.getItemName());
-        System.out.println();
-        System.out.printf(formatDouble, "Starting price: $", i.getStartingPrice());
+    // EFFECTS: updates the lists to reflect JSON files
+    public abstract void updateLists(ItemList userItemList, ItemList auctionItemList);
 
-        if (i.getCurrentBid() == -1) {
-            System.out.printf(formatString, "Current bid: ", "No bids");
-        } else {
-            System.out.printf(formatDouble, "Current bid: $", i.getCurrentBid());
-        }
+    // MODIFIES: parent
+    // EFFECTS: adds the given button to the parent component
+    public void addToParentButton(JComponent parent) {
+        parent.add(button);
+    }
 
-        System.out.printf(formatDouble, "Minimum bid: $", i.getMinBid());
-        System.out.printf(formatDouble, "Buyout: $", i.getBuyout());
-        System.out.println();
-        System.out.println();
+    // MODIFIES: parent
+    // EFFECTS: adds lists to the parent component
+    public void addToParentLists(JComponent parent) {
+        parent.add(list);
+    }
+
+    // EFFECTS: initializes fields for the stores
+    protected void initializeFields(ItemList userItemList, ItemList auctionItemList) {
+        this.userItemList = userItemList;
+        this.auctionItemList = auctionItemList;
     }
 
 }

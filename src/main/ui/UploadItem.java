@@ -3,32 +3,58 @@ package ui;
 import model.Item;
 import model.ItemList;
 
-import java.util.Scanner;
+import javax.swing.*;
 
 // Menu for a user to upload an item to the store.
 // The item uploaded here will show up both in the user store
 // and in the auction store.
 public class UploadItem extends Store {
     private Item item;
-    private Scanner keyboard = new Scanner(System.in);
-    private String itemName;
-    private double startingPrice;
-    private double minBid;
-    private double buyout;
 
-    private ItemList userItemList;
-    private ItemList auctionItemList;
+    private JTextField itemNameField;
+    private JTextField startingPriceField;
+    private JTextField minBidField;
+    private JTextField buyoutField;
 
     // EFFECTS: initializes the item lists
-    public UploadItem(ItemList userItemList, ItemList auctionItemList) {
-        this.userItemList = userItemList;
-        this.auctionItemList = auctionItemList;
+    public UploadItem(ItemList userItemList, ItemList auctionItemList, JComponent parent) {
+        super(userItemList, auctionItemList, parent);
     }
 
-    // EFFECTS: displays the items
+    // MODIFIES: this
+    // EFFECTS: creates the button to upload items and adds listener
     @Override
-    public void showItems() {
-        showItems(userItemList.getList());
+    protected void createComponents(JComponent parent) {
+        button = new JButton("Upload Item");
+        button.addActionListener(e -> uploadItem(parent));
+        createTextFields(parent);
+        addToParentButton(parent);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the text fields for the user to enter an item
+    protected void createTextFields(JComponent parent) {
+        itemNameField = new JTextField(15);
+        itemNameField.setText("Item Name...");
+
+        startingPriceField = new JTextField(15);
+        startingPriceField.setText("Starting price...");
+
+        minBidField = new JTextField(15);
+        minBidField.setText("Min bid increments...");
+
+        buyoutField = new JTextField(15);
+        buyoutField.setText("Buyout...");
+
+        addToParentFields(parent);
+    }
+
+    // EFFECTS: adds components to the parent JPanel
+    public void addToParentFields(JComponent parent) {
+        parent.add(itemNameField);
+        parent.add(startingPriceField);
+        parent.add(minBidField);
+        parent.add(buyoutField);
     }
 
     // MODIFIES: this
@@ -40,67 +66,18 @@ public class UploadItem extends Store {
     }
 
     // MODIFIES: this
-    // EFFECTS: runs the menu to upload an item
-    public void runUploadItem() {
-        this.itemName = inputItemName();
-        this.startingPrice = inputStartingPrice();
-        this.minBid = inputMinBid();
-        this.buyout = inputBuyout();
+    // EFFECTS: uploads the item to the user store and the auction store
+    public void uploadItem(JComponent parent) {
+        String itemNameText = itemNameField.getText();
+        double startingPriceText = Double.parseDouble(startingPriceField.getText());
+        double minBidText = Double.parseDouble(minBidField.getText());
+        double buyoutText = Double.parseDouble(buyoutField.getText());
 
-        this.item = new Item(this.itemName, this.startingPrice, this.minBid, this.buyout, Item.NO_BID_PRICE, false);
-        userItemList.addItem(this.item);
-        auctionItemList.addItem(this.item);
+        item = new Item(itemNameText, startingPriceText, minBidText, buyoutText, Item.NO_BID_PRICE, false);
+        userItemList.addItem(item);
+        auctionItemList.addItem(item);
 
-        System.out.println("Your item has been uploaded to the store successfully!");
-        displayOneItem(this.item);
-
+        JOptionPane.showMessageDialog(parent, "Item uploaded successfully!");
     }
-
-    // MODIFIES: this
-    // EFFECTS: gets the item name
-    private String inputItemName() {
-        System.out.println("Enter the items name: ");
-        return keyboard.next();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: gets the item's starting price
-    private double inputStartingPrice() {
-        System.out.println("Enter starting price: ");
-        while (!keyboard.hasNextDouble()) {
-            System.out.println("Enter a number value please!");
-            keyboard.nextLine();
-        }
-        return keyboard.nextDouble();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: gets the items minimum bid increments
-    private double inputMinBid() {
-        System.out.println("Enter minimum bid increments: ");
-        while (!keyboard.hasNextDouble()) {
-            System.out.println("Enter a number value please!");
-            keyboard.nextLine();
-        }
-        return keyboard.nextDouble();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: gets the items buyout price
-    private double inputBuyout() {
-        System.out.println("Enter the items buyout price: ");
-        while (!keyboard.hasNextDouble()) {
-            System.out.println("Enter a number value please!");
-            keyboard.nextLine();
-        }
-        double input = keyboard.nextDouble();
-        while (input <= this.startingPrice) {
-            System.out.println("Enter a buyout greater than the starting price: ");
-            input = keyboard.nextDouble();
-        }
-        return input;
-    }
-
-
 
 }

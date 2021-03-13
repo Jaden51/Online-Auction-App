@@ -12,7 +12,7 @@
             "minBid": 100,
             "sold": false,
             "itemName": "Mike Trout Rookie Card",
-            "currentBid": -1,
+            "currentBid": 1000,
             "startingPrice": 1000,
             "buyout": 100000
         },
@@ -28,17 +28,9 @@
             "minBid": 3,
             "sold": false,
             "itemName": "Chicago Cubs hat",
-            "currentBid": 20,
+            "currentBid": 30,
             "startingPrice": 20,
             "buyout": 200
-        },
-        {
-            "minBid": 2,
-            "sold": false,
-            "itemName": "Shirt",
-            "currentBid": 1,
-            "startingPrice": 1,
-            "buyout": 3
         }
     ],
     "username": "general"
