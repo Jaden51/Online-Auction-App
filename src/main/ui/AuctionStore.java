@@ -10,12 +10,6 @@ import javax.swing.*;
 // than place a bid on that item.
 public class AuctionStore extends Store {
 
-    private JLabel nameLabel;
-    private JLabel startingPriceLabel;
-    private JLabel currentBidLabel;
-    private JLabel minBidLabel;
-    private JLabel buyoutLabel;
-
     private JTextField placeBidField;
 
     // EFFECTS: gets the user item list from the user item list class
@@ -23,23 +17,14 @@ public class AuctionStore extends Store {
         super(userItemList, auctionItemList, parent);
     }
 
-    // EFFECTS: creates a list model to be used by the JList
-    protected DefaultListModel toListModel() {
-        DefaultListModel listModel = new DefaultListModel();
-        for (Item i : auctionItemList.getList()) {
-            listModel.addElement(i.getItemName());
-        }
-        return listModel;
-    }
-
     // MODIFIES: this, parent
     // EFFECTS: creates the component relative to the store
     @Override
     protected void createComponents(JComponent parent) {
-        list = new JList(toListModel());
+        list = new JList(toListModel(auctionItemList));
         list.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                displayItemInfo((String) list.getSelectedValue());
+                displayItemInfo((String) list.getSelectedValue(), auctionItemList);
             }
         });
 
@@ -49,47 +34,58 @@ public class AuctionStore extends Store {
 
         createLabels(parent);
 
+        placeBidField = new JTextField();
+        parent.add(placeBidField);
+
         button = new JButton("Place bid");
-        button.setEnabled(false);
-        addToParentButton(parent);
-    }
-
-    protected void createLabels(JComponent parent) {
-        nameLabel = new JLabel();
-        parent.add(nameLabel);
-
-        startingPriceLabel = new JLabel();
-        parent.add(startingPriceLabel);
-
-        currentBidLabel = new JLabel();
-        parent.add(currentBidLabel);
-
-        minBidLabel = new JLabel();
-        parent.add(minBidLabel);
-
-        buyoutLabel = new JLabel();
-        parent.add(buyoutLabel);
+        button.addActionListener(e -> placeBid(parent));
+        parent.add(button);
     }
 
     // MODIFIES: this, parent
-    // EFFECTS: displays the item information when the user selects it
-    //          enables the place bid button
-    private void displayItemInfo(String itemName) {
-        for (Item i : auctionItemList.getList()) {
-            if (itemName == i.getItemName()) {
-                nameLabel.setText("Item Name: " + i.getItemName());
-                startingPriceLabel.setText("Starting price: $" + i.getStartingPrice());
-                currentBidLabel.setText("Current bid: $" + i.getCurrentBid());
-                minBidLabel.setText("Minimum bid: $" + i.getMinBid());
-                buyoutLabel.setText("Buyout: $" + i.getBuyout());
+    // EFFECTS: places bid on an item, removes it if it gets sold
+    //          and updates all JFrame components
+    private void placeBid(JComponent parent) {
+        try {
+            Double bid = Double.parseDouble(placeBidField.getText());
+            if (bid < itemSelected.getMinBid()) {
+                throw new ToLowBidException();
             }
+
+            if (itemSelected.getCurrentBid() == Item.NO_BID_PRICE) {
+                itemSelected.increaseBid(bid + 1);
+            } else {
+                itemSelected.increaseBid(bid);
+            }
+            checkSold(parent);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(parent, "Please enter a number!");
+        } catch (ToLowBidException e) {
+            JOptionPane.showMessageDialog(parent, "Enter bid higher than minimum bid!");
+        }
+    }
+
+    // MODIFIES: this, parent
+    // EFFECTS: checks if the item is sold and modifies the GUI and lists accordingly
+    //          if not sold, show the user if the bid was placed successfully
+    private void checkSold(JComponent parent) {
+        if (itemSelected.isSold()) {
+            auctionItemList.removeItem(itemSelected);
+            userItemList.removeItem(itemSelected);
+            JOptionPane.showMessageDialog(parent, "Congratulations on your purchase!");
+            updateJList();
+            scrollPane.setViewportView(list);
+            updateLabels();
+        } else {
+            JOptionPane.showMessageDialog(parent, "Bid placed on " + itemSelected.getItemName() + "!");
+            currentBidLabel.setText("Current bid: $" + itemSelected.getCurrentBid());
         }
     }
 
     // MODIFIES: this, parent
     // EFFECTS: updates the JList component when user updates the stores
     public void updateJList() {
-        list.setModel(toListModel());
+        list.setModel(toListModel(auctionItemList));
     }
 
     // MODIFIES: this
@@ -98,6 +94,10 @@ public class AuctionStore extends Store {
     public void updateLists(ItemList userItemList, ItemList auctionItemList) {
         this.auctionItemList = auctionItemList;
         this.userItemList = userItemList;
+        updateJList();
+    }
+
+    private class ToLowBidException extends Exception {
     }
 
 }

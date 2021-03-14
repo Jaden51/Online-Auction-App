@@ -1,6 +1,5 @@
 package ui;
 
-import model.Item;
 import model.ItemList;
 
 import javax.swing.*;
@@ -13,30 +12,26 @@ public class UserStore extends Store {
         super(userItemList, auctionItemList, parent);
     }
 
-    // EFFECTS: turns lists into lists model to be used by components
-    protected DefaultListModel toListModel() {
-        DefaultListModel listModel = new DefaultListModel();
-        for (Item i : userItemList.getList()) {
-            listModel.addElement(i.getItemName());
-        }
-
-        return listModel;
+    // MODIFIES: this, parent
+    // EFFECTS: creates the components relative to the user store
+    @Override
+    protected void createComponents(JComponent parent) {
+        list = new JList(toListModel(userItemList));
+        list.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                displayItemInfo((String) list.getSelectedValue(), userItemList);
+            }
+        });
+        scrollPane = new JScrollPane();
+        scrollPane.setViewportView(list);
+        parent.add(scrollPane);
+        createLabels(parent);
     }
 
     // MODIFIES: this, parent
     // EFFECTS: updates the JList to always display updated information
     public void updateJList() {
-        list.setModel(toListModel());
-    }
-
-    // MODIFIES: this, parent
-    // EFFECTS: creates the components relative to the user store
-    @Override
-    protected void createComponents(JComponent parent) {
-        list = new JList(toListModel());
-        scrollPane = new JScrollPane();
-        scrollPane.setViewportView(list);
-        parent.add(scrollPane);
+        list.setModel(toListModel(userItemList));
     }
 
     // EFFECTS: updates the users items based on JSON data
@@ -44,6 +39,7 @@ public class UserStore extends Store {
     public void updateLists(ItemList userItemList, ItemList auctionItemList) {
         this.userItemList = userItemList;
         this.auctionItemList = auctionItemList;
+        updateJList();
     }
 
 }

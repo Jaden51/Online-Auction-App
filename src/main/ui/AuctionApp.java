@@ -42,6 +42,8 @@ public class AuctionApp extends JFrame implements ItemListener {
     private JPanel userStoreCard;
     private JPanel auctionStoreCard;
     private JPanel uploadItemCard;
+    private JButton saveButton;
+    private JButton loadButton;
 
     // EFFECTS: runs the app
     public AuctionApp() {
@@ -83,10 +85,10 @@ public class AuctionApp extends JFrame implements ItemListener {
         cb.addItemListener(this);
         switchCard.add(cb);
 
-        userStoreCard = new JPanel();
+        userStoreCard = new JPanel(new GridLayout(8, 1));
         userStore = new UserStore(userItemList, auctionItemList, userStoreCard);
 
-        auctionStoreCard = new JPanel(new GridLayout(7, 1));
+        auctionStoreCard = new JPanel(new GridLayout(8, 1));
         auctionStore = new AuctionStore(userItemList, auctionItemList, auctionStoreCard);
 
         uploadItemCard = new JPanel();
@@ -99,6 +101,19 @@ public class AuctionApp extends JFrame implements ItemListener {
 
         add(switchCard, BorderLayout.PAGE_START);
         add(storeArea, BorderLayout.CENTER);
+        createPersistenceButtons();
+
+    }
+
+    private void createPersistenceButtons() {
+        JPanel persistenceArea = new JPanel(new GridLayout(1, 2));
+        saveButton = new JButton("Save Items");
+        saveButton.addActionListener(e -> saveItemsUserStore());
+        loadButton = new JButton("Load Items");
+        loadButton.addActionListener(e -> loadItemsUserStore());
+        persistenceArea.add(saveButton);
+        persistenceArea.add(loadButton);
+        add(persistenceArea, BorderLayout.SOUTH);
     }
 
     // MODIFIES: this
@@ -128,9 +143,10 @@ public class AuctionApp extends JFrame implements ItemListener {
     protected void loadItemsUserStore() {
         try {
             userItemList = jsonReaderUserStore.readUserList();
-            System.out.println("Loaded " + userItemList.getUsername() + " from " + JSON_USER_STORE);
+            updateLists();
+            JOptionPane.showMessageDialog(this, "Loaded " + userItemList.getUsername() + " from " + JSON_USER_STORE);
         } catch (Exception e) {
-            System.out.println("Unable to read from file: " + JSON_USER_STORE);
+            JOptionPane.showMessageDialog(this, "Unable to read to file: " + JSON_USER_STORE);
         }
     }
 
@@ -140,9 +156,9 @@ public class AuctionApp extends JFrame implements ItemListener {
             jsonWriterUserStore.open();
             jsonWriterUserStore.write(userItemList);
             jsonWriterUserStore.close();
-            System.out.println("Saved " + userItemList.getUsername() + " to " + JSON_USER_STORE);
+            JOptionPane.showMessageDialog(this, "Saved " + userItemList.getUsername() + " to " + JSON_USER_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_USER_STORE);
+            JOptionPane.showMessageDialog(this, "Unable to write to file: " + JSON_USER_STORE);
         }
     }
 
@@ -153,7 +169,7 @@ public class AuctionApp extends JFrame implements ItemListener {
         auctionStore.updateLists(userItemList, auctionItemList);
     }
 
-
+    // EFFECTS: switches store cards
     @Override
     public void itemStateChanged(ItemEvent e) {
         CardLayout cl = (CardLayout) (storeArea.getLayout());
@@ -161,10 +177,14 @@ public class AuctionApp extends JFrame implements ItemListener {
         Object item = e.getItem();
         if (("Your Items").equals(item)) {
             userStore.updateJList();
+            userStore.updateLabels();
         } else if (("Store").equals(item)) {
             auctionStore.updateJList();
+            auctionStore.updateLabels();
+            updateLists();
+            saveItemsAuctionStore();
         } else if (("Upload Item").equals(item)) {
-            System.out.println();
+            saveItemsAuctionStore();
         }
     }
 }

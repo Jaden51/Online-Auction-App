@@ -28,7 +28,7 @@ public class UploadItem extends Store {
         button = new JButton("Upload Item");
         button.addActionListener(e -> uploadItem(parent));
         createTextFields(parent);
-        addToParentButton(parent);
+        parent.add(button);
     }
 
     // MODIFIES: this, parent
@@ -58,6 +58,31 @@ public class UploadItem extends Store {
         parent.add(buyoutField);
     }
 
+    // MODIFIES: this, parent
+    // EFFECTS: uploads the item to the user store and the auction store
+    public void uploadItem(JComponent parent) {
+        try {
+            String itemName = itemNameField.getText();
+            double staringPrice = Double.parseDouble(startingPriceField.getText());
+            double minBid = Double.parseDouble(minBidField.getText());
+            double buyout = Double.parseDouble(buyoutField.getText());
+
+            if (staringPrice > buyout) {
+                throw new BuyoutException();
+            }
+
+            item = new Item(itemName, staringPrice, minBid, buyout, Item.NO_BID_PRICE, false);
+            userItemList.addItem(item);
+            auctionItemList.addItem(item);
+
+            JOptionPane.showMessageDialog(parent, "Item uploaded successfully!");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(parent, "Enter a number please!");
+        } catch (BuyoutException e) {
+            JOptionPane.showMessageDialog(parent, "Enter buyout greater than staring price");
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: updates the list to match the data in the data persistence
     @Override
@@ -66,19 +91,6 @@ public class UploadItem extends Store {
         this.auctionItemList = auctionItemList;
     }
 
-    // MODIFIES: this, parent
-    // EFFECTS: uploads the item to the user store and the auction store
-    public void uploadItem(JComponent parent) {
-        String itemNameText = itemNameField.getText();
-        double startingPriceText = Double.parseDouble(startingPriceField.getText());
-        double minBidText = Double.parseDouble(minBidField.getText());
-        double buyoutText = Double.parseDouble(buyoutField.getText());
-
-        item = new Item(itemNameText, startingPriceText, minBidText, buyoutText, Item.NO_BID_PRICE, false);
-        userItemList.addItem(item);
-        auctionItemList.addItem(item);
-
-        JOptionPane.showMessageDialog(parent, "Item uploaded successfully!");
-    }
+    private class BuyoutException extends Exception {}
 
 }
