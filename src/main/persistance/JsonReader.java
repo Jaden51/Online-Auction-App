@@ -82,7 +82,9 @@ public class JsonReader {
         double buyout = jsonObject.getDouble("buyout");
         double currentBid = jsonObject.getDouble("currentBid");
         boolean sold = jsonObject.getBoolean("sold");
+        String id = jsonObject.getString("id");
         Item item = new Item(itemName, startingPrice, minBid, buyout, currentBid, false);
+        item.setId(id);
         il.addItem(item);
     }
 }

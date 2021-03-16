@@ -47,7 +47,7 @@ public class AuctionStore extends Store {
     //          and updates all JFrame components
     private void placeBid(JComponent parent) {
         try {
-            Double bid = Double.parseDouble(placeBidField.getText());
+            double bid = Double.parseDouble(placeBidField.getText());
             if (bid < itemSelected.getMinBid()) {
                 throw new ToLowBidException();
             }
@@ -86,6 +86,12 @@ public class AuctionStore extends Store {
     // EFFECTS: updates the JList component when user updates the stores
     public void updateJList() {
         list.setModel(toListModel(auctionItemList));
+    }
+
+    // MODIFIES: parent
+    // EFFECTS: clears the text field from bids when user switches tabs
+    public void clearTextFields() {
+        placeBidField.setText("");
     }
 
     // MODIFIES: this

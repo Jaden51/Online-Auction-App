@@ -3,6 +3,8 @@ package model;
 import org.json.JSONObject;
 import persistance.Writable;
 
+import java.util.UUID;
+
 // Represents an item currently in the auction app ecosystem.
 // It has all the features a regular item up for auction would have
 // like, its name, starting price, the minimum bid increments and the
@@ -16,6 +18,7 @@ public class Item implements Writable {
     private final double buyout;
     private double currentBid;
     private boolean sold;
+    private String id;
 
     // REQUIRES: itemName of non 0 length, starting price > 0, minBid > 0, buyout > 0
     // EFFECTS: sets the name of the item; the price of the item;
@@ -27,8 +30,8 @@ public class Item implements Writable {
         this.currentBid = currentBid;
         this.minBid = minBid;
         this.buyout = buyout;
-
         this.sold = sold;
+        this.id = UUID.randomUUID().toString();
     }
 
     // REQUIRES: amount >= minBid
@@ -54,6 +57,10 @@ public class Item implements Writable {
         this.currentBid = this.startingPrice;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -63,6 +70,7 @@ public class Item implements Writable {
         json.put("buyout", buyout);
         json.put("currentBid", currentBid);
         json.put("sold", sold);
+        json.put("id", id);
 
         return json;
     }
@@ -85,6 +93,10 @@ public class Item implements Writable {
 
     public double getBuyout() {
         return this.buyout;
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public boolean isSold() {

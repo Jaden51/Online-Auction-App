@@ -1,36 +1,40 @@
 {
     "userStoreItems": [
         {
-            "minBid": 4,
-            "sold": false,
-            "itemName": "Pants",
-            "currentBid": -1,
-            "startingPrice": 10,
-            "buyout": 50
-        },
-        {
             "minBid": 100,
             "sold": false,
             "itemName": "Mike Trout Rookie Card",
-            "currentBid": 1000,
+            "currentBid": -1,
             "startingPrice": 1000,
-            "buyout": 100000
-        },
-        {
-            "minBid": 1,
-            "sold": false,
-            "itemName": "Worn out nike pants",
-            "currentBid": 10,
-            "startingPrice": 10,
-            "buyout": 100
+            "id": "f9a5dc97-ebbc-489e-b2f1-0e58e6b2b42b",
+            "buyout": 10000
         },
         {
             "minBid": 3,
             "sold": false,
-            "itemName": "Chicago Cubs hat",
-            "currentBid": 30,
+            "itemName": "Old Nike Pants",
+            "currentBid": -1,
+            "startingPrice": 10,
+            "id": "a63f3353-6e70-4360-bcbb-92f0b3728e9e",
+            "buyout": 50
+        },
+        {
+            "minBid": 5,
+            "sold": false,
+            "itemName": "Chicago Cubs Cap",
+            "currentBid": -1,
             "startingPrice": 20,
-            "buyout": 200
+            "id": "402e983c-a986-44b1-9226-93e8e22efa63",
+            "buyout": 100
+        },
+        {
+            "minBid": 12,
+            "sold": false,
+            "itemName": "Pog",
+            "currentBid": 12,
+            "startingPrice": 1,
+            "id": "eaa8024b-4a9d-476b-90ff-c6ffcbe2be8f",
+            "buyout": 123
         }
     ],
     "username": "general"

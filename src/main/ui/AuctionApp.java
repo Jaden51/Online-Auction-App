@@ -1,6 +1,7 @@
 package ui;
 
 import model.AuctionItemList;
+import model.Item;
 import model.UserItemList;
 import persistance.JsonReader;
 import persistance.JsonWriter;
@@ -9,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -57,7 +60,13 @@ public class AuctionApp extends JFrame implements ItemListener {
     private void initializeFields() {
         keyboard = new Scanner(System.in);
         userItemList = new UserItemList("jh51");
+        checkSold();
         loadItemsAuctionStore();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes items from the auction and user
+    private void checkSold() {
     }
 
     // MODIFIES: this
@@ -69,15 +78,31 @@ public class AuctionApp extends JFrame implements ItemListener {
         jsonReaderAuctionStore = new JsonReader(JSON_AUCTION_STORE);
     }
 
+    // EFFECTS: creates and initializes GUI. Adds new exit procedure
     private void initializeGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         createStores();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exitProcedure();
+            }
+        });
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    // EFFECTS: saves the auction store and closes application
+    private void exitProcedure() {
+        saveItemsAuctionStore();
+        dispose();
+        System.exit(0);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the stores used in the application and adds components to GUI
     private void createStores() {
         JPanel switchCard = new JPanel();
         JComboBox cb = new JComboBox(new String[]{"Your Items", "Store", "Upload Item"});
@@ -105,6 +130,8 @@ public class AuctionApp extends JFrame implements ItemListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates the buttons to load and save your items
     private void createPersistenceButtons() {
         JPanel persistenceArea = new JPanel(new GridLayout(1, 2));
         saveButton = new JButton("Save Items");
@@ -114,6 +141,27 @@ public class AuctionApp extends JFrame implements ItemListener {
         persistenceArea.add(saveButton);
         persistenceArea.add(loadButton);
         add(persistenceArea, BorderLayout.SOUTH);
+    }
+
+    // EFFECTS: switches store cards
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        CardLayout cl = (CardLayout) (storeArea.getLayout());
+        cl.show(storeArea, (String) e.getItem());
+        Object item = e.getItem();
+        if (("Your Items").equals(item)) {
+            userStore.updateJList();
+            userStore.updateLabels();
+        } else if (("Store").equals(item)) {
+            auctionStore.updateJList();
+            auctionStore.updateLabels();
+            auctionStore.clearTextFields();
+            updateLists();
+            saveItemsAuctionStore();
+        } else if (("Upload Item").equals(item)) {
+            updateLists();
+            saveItemsAuctionStore();
+        }
     }
 
     // MODIFIES: this
@@ -133,6 +181,7 @@ public class AuctionApp extends JFrame implements ItemListener {
             jsonWriterAuctionStore.open();
             jsonWriterAuctionStore.write(auctionItemList);
             jsonWriterAuctionStore.close();
+            updateLists();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_AUCTION_STORE);
         }
@@ -143,6 +192,7 @@ public class AuctionApp extends JFrame implements ItemListener {
     protected void loadItemsUserStore() {
         try {
             userItemList = jsonReaderUserStore.readUserList();
+            matchItemIds();
             updateLists();
             JOptionPane.showMessageDialog(this, "Loaded " + userItemList.getUsername() + " from " + JSON_USER_STORE);
         } catch (Exception e) {
@@ -156,6 +206,7 @@ public class AuctionApp extends JFrame implements ItemListener {
             jsonWriterUserStore.open();
             jsonWriterUserStore.write(userItemList);
             jsonWriterUserStore.close();
+            updateLists();
             JOptionPane.showMessageDialog(this, "Saved " + userItemList.getUsername() + " to " + JSON_USER_STORE);
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(this, "Unable to write to file: " + JSON_USER_STORE);
@@ -169,22 +220,10 @@ public class AuctionApp extends JFrame implements ItemListener {
         auctionStore.updateLists(userItemList, auctionItemList);
     }
 
-    // EFFECTS: switches store cards
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        CardLayout cl = (CardLayout) (storeArea.getLayout());
-        cl.show(storeArea, (String) e.getItem());
-        Object item = e.getItem();
-        if (("Your Items").equals(item)) {
-            userStore.updateJList();
-            userStore.updateLabels();
-        } else if (("Store").equals(item)) {
-            auctionStore.updateJList();
-            auctionStore.updateLabels();
-            updateLists();
-            saveItemsAuctionStore();
-        } else if (("Upload Item").equals(item)) {
-            saveItemsAuctionStore();
-        }
+    // MODIFIES: this
+    // EFFECTS: when a user loads their items, if their item is in the store
+    //          match the objects from both stores they so are both editable
+    public void matchItemIds() {
     }
+
 }
