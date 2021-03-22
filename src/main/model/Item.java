@@ -61,6 +61,7 @@ public class Item implements Writable {
         this.id = id;
     }
 
+    // EFFECTS: puts all item data in json file
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

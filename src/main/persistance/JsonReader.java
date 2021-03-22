@@ -31,6 +31,8 @@ public class JsonReader {
         return parseUserList(jsonObject);
     }
 
+    // EFFECTS: reads itemList from file and returns it;
+    // throws IOException if an error occurs reading data from file
     public AuctionItemList readAuctionList() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -56,6 +58,7 @@ public class JsonReader {
         return il;
     }
 
+    // EFFECTS: parses itemList from JSON object and returns it
     private AuctionItemList parseAuctionList(JSONObject jsonObject) {
         String username = jsonObject.getString("username");
         AuctionItemList il = new AuctionItemList(username);

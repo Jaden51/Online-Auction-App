@@ -65,6 +65,7 @@ public abstract class ItemList implements Writable {
         return json;
     }
 
+    //EFFECTS: turns the item list into a JSON array
     private JSONArray itemListToJson() {
         JSONArray jsonArray = new JSONArray();
 

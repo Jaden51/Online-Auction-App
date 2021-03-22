@@ -8,12 +8,9 @@ import persistance.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.List;
 
 // The main page of the auction app. This class initializes the
 // data and shows the main menu. The menu displayed here
@@ -31,8 +28,6 @@ public class AuctionApp extends JFrame implements ItemListener {
 
     private UserItemList userItemList;
     private AuctionItemList auctionItemList;
-
-    private Scanner keyboard;
 
     protected static final String JSON_USER_STORE = "./data/userStore.json";
     protected static final String JSON_AUCTION_STORE = "./data/auctionStore.json";
@@ -58,15 +53,8 @@ public class AuctionApp extends JFrame implements ItemListener {
     // MODIFIES: this
     // EFFECTS: initializes fields
     private void initializeFields() {
-        keyboard = new Scanner(System.in);
         userItemList = new UserItemList("jh51");
-        checkSold();
         loadItemsAuctionStore();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: removes items from the auction and user
-    private void checkSold() {
     }
 
     // MODIFIES: this
@@ -224,6 +212,16 @@ public class AuctionApp extends JFrame implements ItemListener {
     // EFFECTS: when a user loads their items, if their item is in the store
     //          match the objects from both stores they so are both editable
     public void matchItemIds() {
+        List<Item> auctionList = auctionItemList.getList();
+        List<Item> userList = userItemList.getList();
+
+        for (int i = 0; i < auctionList.size(); i++) {
+            for (int j = 0; j < userList.size(); j++) {
+                if (auctionList.get(i).getId().equals(userList.get(j).getId())) {
+                    userList.set(j, auctionList.get(i));
+                }
+            }
+        }
     }
 
 }

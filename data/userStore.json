@@ -1,12 +1,4 @@
 {
-    "userStoreItems": [{
-        "minBid": 12,
-        "sold": false,
-        "itemName": "Pog",
-        "currentBid": -1,
-        "startingPrice": 1,
-        "id": "eaa8024b-4a9d-476b-90ff-c6ffcbe2be8f",
-        "buyout": 123
-    }],
+    "userStoreItems": [],
     "username": "jh51"
 }

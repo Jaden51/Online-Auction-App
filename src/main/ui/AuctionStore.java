@@ -2,8 +2,13 @@ package ui;
 
 import model.Item;
 import model.ItemList;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 // Represents the general auction store where all users can view items
 // You pick an item based on the index number of said item and can
@@ -72,6 +77,7 @@ public class AuctionStore extends Store {
         if (itemSelected.isSold()) {
             auctionItemList.removeItem(itemSelected);
             userItemList.removeItem(itemSelected);
+            playSound();
             JOptionPane.showMessageDialog(parent, "Congratulations on your purchase!");
             updateJList();
             scrollPane.setViewportView(list);
@@ -101,6 +107,19 @@ public class AuctionStore extends Store {
         this.auctionItemList = auctionItemList;
         this.userItemList = userItemList;
         updateJList();
+    }
+
+    // EFFECTS: plays sound when someone buys an item
+    public void playSound() {
+        String path = "Data\\\\Acceptance.wav";
+        InputStream success;
+        try {
+            success = new FileInputStream(new File(path));
+            AudioStream audioStream = new AudioStream(success);
+            AudioPlayer.player.start(audioStream);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error playing sounds");
+        }
     }
 
     private class ToLowBidException extends Exception {

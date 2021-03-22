@@ -26,15 +26,6 @@
             "startingPrice": 20,
             "id": "402e983c-a986-44b1-9226-93e8e22efa63",
             "buyout": 100
-        },
-        {
-            "minBid": 12,
-            "sold": false,
-            "itemName": "Pog",
-            "currentBid": 12,
-            "startingPrice": 1,
-            "id": "eaa8024b-4a9d-476b-90ff-c6ffcbe2be8f",
-            "buyout": 123
         }
     ],
     "username": "general"

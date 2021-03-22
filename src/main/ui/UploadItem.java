@@ -2,8 +2,11 @@ package ui;
 
 import model.Item;
 import model.ItemList;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 import javax.swing.*;
+import java.io.*;
 
 // Menu for a user to upload an item to the store.
 // The item uploaded here will show up both in the user store
@@ -75,6 +78,7 @@ public class UploadItem extends Store {
             userItemList.addItem(item);
             auctionItemList.addItem(item);
 
+            playSound();
             JOptionPane.showMessageDialog(parent, "Item uploaded successfully!");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(parent, "Enter a number please!");
@@ -89,6 +93,19 @@ public class UploadItem extends Store {
     public void updateLists(ItemList userItemList, ItemList auctionItemList) {
         this.userItemList = userItemList;
         this.auctionItemList = auctionItemList;
+    }
+
+    // EFFECTS: plays sound when user uploads item
+    public void playSound() {
+        String path = "Data\\\\Acceptance.wav";
+        InputStream success;
+        try {
+            success = new FileInputStream(new File(path));
+            AudioStream audioStream = new AudioStream(success);
+            AudioPlayer.player.start(audioStream);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error playing sounds");
+        }
     }
 
     private class BuyoutException extends Exception {}
