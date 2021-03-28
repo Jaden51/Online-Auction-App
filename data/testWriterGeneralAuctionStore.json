@@ -6,6 +6,7 @@
             "itemName": "hat",
             "currentBid": -1,
             "startingPrice": 100,
+            "id": "909b37f4-61ee-42bf-ad97-33796474b0ee",
             "buyout": 1000
         },
         {
@@ -14,6 +15,7 @@
             "itemName": "pants",
             "currentBid": -1,
             "startingPrice": 200,
+            "id": "4cf47909-1922-40b3-bdd1-2d705c2bbd14",
             "buyout": 500
         }
     ],

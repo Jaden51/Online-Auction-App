@@ -15,6 +15,12 @@ public class ItemTest {
         item2 = new Item("pants", 100, 0, 1000, Item.NO_BID_PRICE, false);
     }
 
+    // The id produced is random but we can check that its a string
+    @Test
+    void testThatIdIsString() {
+        assertTrue(item1.getId() instanceof String);
+    }
+
     @Test
     void testIncreaseBidNotBuyout() {
         item1.setFirstBid();

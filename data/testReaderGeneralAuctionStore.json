@@ -6,7 +6,8 @@
       "itemName": "hat",
       "currentBid": -1,
       "startingPrice": 100,
-      "buyout": 1000
+      "buyout": 1000,
+      "id": "0"
     },
     {
       "minBid": 1,
@@ -14,7 +15,8 @@
       "itemName": "pants",
       "currentBid": -1,
       "startingPrice": 200,
-      "buyout": 500
+      "buyout": 500,
+      "id": "1"
     }
   ],
   "username": "Jaden Hums"
