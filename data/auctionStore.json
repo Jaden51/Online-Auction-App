@@ -19,13 +19,40 @@
             "buyout": 50
         },
         {
-            "minBid": 5,
+            "minBid": 12,
             "sold": false,
-            "itemName": "Chicago Cubs Cap",
+            "itemName": "table",
             "currentBid": -1,
-            "startingPrice": 20,
-            "id": "402e983c-a986-44b1-9226-93e8e22efa63",
-            "buyout": 100
+            "startingPrice": 1,
+            "id": "a9facad3-25ac-434d-92f1-d297ef1c5f71",
+            "buyout": 123
+        },
+        {
+            "minBid": 123,
+            "sold": false,
+            "itemName": "Pog",
+            "currentBid": 123,
+            "startingPrice": 1,
+            "id": "a5a7cbd9-8e91-4b73-91ab-699990bdca04",
+            "buyout": 1235
+        },
+        {
+            "minBid": 123,
+            "sold": false,
+            "itemName": "Pog",
+            "currentBid": -1,
+            "startingPrice": 1,
+            "id": "e7d1883b-5488-4793-a1e2-9b8a7949ab11",
+            "buyout": 1235
+        },
+        {
+            "minBid": 123,
+            "sold": false,
+            "itemName": "Pog",
+            "currentBid": -1,
+            "startingPrice": 1,
+            "id": "d3f5383e-0b2b-48e8-a426-e7552d171982",
+            "buyout": 1235
         }
     ],
     "username": "general"

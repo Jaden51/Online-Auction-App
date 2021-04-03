@@ -97,7 +97,7 @@ public class UploadItem extends Store {
 
     // EFFECTS: plays sound when user uploads item
     public void playSound() {
-        String path = "Data\\\\Acceptance.wav";
+        String path = "./data/Acceptance.wav";
         InputStream success;
         try {
             success = new FileInputStream(new File(path));
